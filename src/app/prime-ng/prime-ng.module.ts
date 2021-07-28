@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 // PrimeNG
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 
 
 
@@ -15,7 +16,8 @@ import { ButtonModule } from 'primeng/button';
   // ],
   exports:[
     MenubarModule,
-    ButtonModule
+    ButtonModule,
+    DialogModule
   ]
 })
 export class PrimeNgModule { }

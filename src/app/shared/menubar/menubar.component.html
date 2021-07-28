@@ -1,4 +1,21 @@
 <p-menubar [model]="items">
-    <button pButton type="button" label="Hostel App" icon="pi pi-home" iconPos="right" class="p-button-warning p-button-text" (click)="hola()"></button>
+    <button pButton type="button" label="Hostel App" icon="pi pi-home" iconPos="right" class="p-button-warning p-button-text" (click)="showDialog()"></button>
 </p-menubar>
+
+<!--DIALOG-->
+<p-dialog header="¿Por qué Hostel App?" [(visible)]="display" [style]="{width: '50vw'}" [baseZIndex]="10000">
+    <p>Antes de la pandemia trabajé en un hostel en donde usaban planillas para todo: registrar clientes, pagos, gastos, tenían las habitaciones
+        con las camas dibujadas y esto, generaba cada tanto problemas y ni hablar en temporada alta.
+    </p>
+    <p>
+        Durante mi curso intensivo en <strong>Comunidad IT</strong>, recordé este problema y desarrollé
+        esta misma aplicación pero utilizando Framework7, que se utiliza para el desarrollo de aplicaciones híbridas (web/mobile).
+    </p>
+    <p>
+        Muchas gracias por tomarte un tiempo para conocer esta aplicación. Cualquier consulta, no dudes en contactarme.
+    </p>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="display=false" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
 
