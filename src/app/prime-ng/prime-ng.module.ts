@@ -4,7 +4,10 @@ import { NgModule } from '@angular/core';
 // PrimeNG
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
@@ -17,7 +20,10 @@ import { DialogModule } from 'primeng/dialog';
   exports:[
     MenubarModule,
     ButtonModule,
-    DialogModule
+    DialogModule,
+    DividerModule,
+    CardModule,
+    InputTextModule
   ]
 })
 export class PrimeNgModule { }
