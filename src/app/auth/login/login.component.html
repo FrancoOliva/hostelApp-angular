@@ -1,1 +1,44 @@
-<p>login works!</p>
+<!-- LOGIN/REGISTRO -->
+<div class="grid flex justify-content-center flex-wrap mt-5 animate__animated animate__backInDown">
+    
+    <p-card class="col-12 md:col-6">
+
+        <div class="flex align-items-center justify-content-center mb-4">
+            <img src="assets/logo.png" alt="logo hostel" class="img-inicio">
+        </div>
+
+        <form
+        autocomplete="off"
+        [formGroup]="loginBasico"
+        (ngSubmit)="ingresar()">
+
+        <!--Usuario-->
+        <div class="flex align-items-center justify-content-center mb-4">                
+            <input type="text" pInputText placeholder="Email" formControlName="email"/>
+        </div>
+
+        <!--Contraseña-->
+        <div class="flex align-items-center justify-content-center mb-4">
+            <input type="password" pInputText placeholder="Contraseña" formControlName="password"/>
+        </div>
+
+        <!--Recuperar contraseña-->
+        <div class="flex align-items-center justify-content-center mb-2">
+            <span>¿Olvidaste la contraseña?</span>
+        </div>
+
+        <!--Crear Usuario-->
+        <div class="flex align-items-center justify-content-center mb-4">
+            <span>Quiero registrarme</span>
+        </div>
+
+        <!--Botón Ingresar-->
+        <div class="flex align-items-center justify-content-center mb-4">
+            <button pButton type="submit" label="Ingresar" class="p-button-success"></button>
+        </div>
+
+        </form>             
+
+    </p-card>    
+
+</div>

@@ -7,26 +7,28 @@ import { AppComponent } from './app.component';
 
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
 import { SharedModule } from './shared/shared.module';
-import { LoginComponent } from './auth/login/login.component';
-import { RegistroComponent } from './auth/registro/registro.component';
+import { AuthModule } from './auth/auth.module';
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegistroComponent
+    
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     PrimeNgModule,
-    SharedModule
-    
+    SharedModule,
+    AuthModule
 
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
