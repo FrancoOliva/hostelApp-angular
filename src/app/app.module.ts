@@ -10,12 +10,20 @@ import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
 
 
+/** Firebase */
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuth } from '@angular/fire/auth';
+
+import { environment } from 'src/environments/environment';
+
+
+
+
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    
+    AppComponent    
   ],
   imports: [
     BrowserModule,
@@ -23,11 +31,12 @@ import { AuthModule } from './auth/auth.module';
     AppRoutingModule,
     PrimeNgModule,
     SharedModule,
-    AuthModule
+    AuthModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
 
   ],
   providers: [
-    
+    AngularFireAuth
   ],
   bootstrap: [AppComponent]
 })
