@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
-
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: []
 })
 export class LoginComponent implements OnInit {
 
@@ -17,7 +16,7 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(8)] ]
   });
 
-  constructor( private fb: FormBuilder, private auth: AngularFireAuth ) { }
+  constructor( private fb: FormBuilder, private auth: AngularFireAuth, private router: Router ) { }
 
   ngOnInit(): void {
   }
@@ -31,13 +30,17 @@ export class LoginComponent implements OnInit {
     // }
 
     this.auth.signInWithEmailAndPassword(this.loginBasico.value.email, this.loginBasico.value.password).then((usuario) =>{
+
       console.log('USUARIO AUTENTICADO CORRECTAMENTE');
+
+      this.router.navigate(['./hostel-app/inicio']);
+
+      
     }).catch((error) =>{
       const errorCode = error.code;
       const errorMessage = error.message;
     });
 
-    console.log(this.loginBasico.value);
   }
 
 }

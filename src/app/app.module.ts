@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
-import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
 
 
@@ -15,6 +14,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import { environment } from 'src/environments/environment';
+import { PagesModule } from './pages/pages.module';
+
+
 
 
 
@@ -23,15 +25,15 @@ import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
-    AppComponent    
+    AppComponent   
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     PrimeNgModule,
-    SharedModule,
     AuthModule,
+    PagesModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
 
   ],

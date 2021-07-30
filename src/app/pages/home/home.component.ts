@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-menubar',
-  templateUrl: './menubar.component.html',
-  styleUrls: ['./menubar.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styles: [
+  ]
 })
-export class MenubarComponent implements OnInit {
+export class HomeComponent implements OnInit {
+   
 
   items: MenuItem[] = [];
   display : boolean = false;
@@ -19,9 +21,16 @@ export class MenubarComponent implements OnInit {
       {
           label: 'Registrar',
           items: [
-          {label: 'Clientes' },
-          {label: 'Pagos'},
-          {label: 'Gastos'}
+          {
+            label: 'Clientes',
+            routerLink: 'registrar-clientes' },
+          {
+            label: 'Pagos',
+            routerLink: 'registrar-pagos'
+          },
+          {
+            label: 'Gastos',
+            routerLink: 'registrar-pagos'}
         ]
       },
       {
@@ -40,10 +49,8 @@ export class MenubarComponent implements OnInit {
         ]
       }
   ];
-  
-  }
 
-  
+  }
 
   showDialog() {
     this.display  = true;
