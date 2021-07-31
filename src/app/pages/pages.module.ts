@@ -7,6 +7,7 @@ import { RegistrarGastoComponent } from './registrar-gasto/registrar-gasto.compo
 import { RegistrarPagoComponent } from './registrar-pago/registrar-pago.component';
 import { HomeComponent } from './home/home.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
   imports: [
     CommonModule,
     PagesRoutingModule,
-    PrimeNgModule
+    PrimeNgModule,
+    ReactiveFormsModule
   ],
   exports: [
     HomeComponent,
