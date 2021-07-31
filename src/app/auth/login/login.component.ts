@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { FirebaseService } from '../../servicios/firebase.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +15,7 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(8)] ]
   });
 
-  constructor( private fb: FormBuilder, private auth: AngularFireAuth, private router: Router ) { }
+  constructor( private fb: FormBuilder, private auth: FirebaseService ) { }
 
   ngOnInit(): void {
   }
@@ -29,17 +28,8 @@ export class LoginComponent implements OnInit {
     //   return;
     // }
 
-    this.auth.signInWithEmailAndPassword(this.loginBasico.value.email, this.loginBasico.value.password).then((usuario) =>{
-
-      console.log('USUARIO AUTENTICADO CORRECTAMENTE');
-
-      this.router.navigate(['./hostel-app/inicio']);
-
-      
-    }).catch((error) =>{
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+    // Servicio 
+    this.auth.login(this.loginBasico.value.email,this.loginBasico.value.password);
 
   }
 
