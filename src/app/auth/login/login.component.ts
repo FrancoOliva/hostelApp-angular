@@ -20,10 +20,19 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ingresar(){
+  iniciarSesion(){
+
+    console.log(this.loginBasico);
+
+    if( this.loginBasico.invalid ){
+      this.loginBasico.markAllAsTouched();
+      console.log('Se apretó iniciar sesión sin completar email y contraseña');
+      return;
+    }
 
     // Servicio 
     this.auth.login(this.loginBasico.value.email,this.loginBasico.value.password);
+    this.loginBasico.reset();
 
   }
 

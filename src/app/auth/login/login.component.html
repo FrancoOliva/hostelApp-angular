@@ -1,1 +1,49 @@
-<!-- Rehacer login -->
+<div class="grid justify-content-center mt-8">
+    
+    <div class="col-12 md:col-6 animate__animated animate__backInDown">
+        <p-card>
+            <div class="flex justify-content-center flex-wrap mb-2">
+                <img src="assets/logo.png" class="img-inicio">
+            </div>
+
+            <!--Formulario-->
+            <div class="flex justify-content-center flex-wrap">
+                <form 
+                autocomplete="off"
+                [formGroup]="loginBasico"
+                (ngSubmit)="iniciarSesion()">
+                    <!--Ingresar Correo-->
+                    <div class="grid">
+                        <div class="col-12 flex align-items-center justify-content-center">
+                            <input type="text" pInputText placeholder="Correo electrónico" formControlName="email">
+                        </div>
+                        <!--Mensaje: Usuario inexistente-->
+                        <div class="col-12 flex align-items-center justify-content-center">
+                            <span class="p-error" *ngIf="false">
+                                El correo no existe.
+                            </span>
+                        </div>
+                    </div>
+                    <!--Ingresar Contraseña-->
+                    <div class="grid">
+                        <div class="col-12 flex align-items-center justify-content-center">
+                            <input type="password" pInputText placeholder="Contraseña" formControlName="password">
+                        </div>
+                        <!--Mensaje: Usuario inexistente-->
+                        <div class="col-12 flex align-items-center justify-content-center">
+                            <span class="p-error" *ngIf="false">
+                                Contraseña incorrecta.
+                            </span>
+                        </div>
+                        <!-- Iniciar sesión -->                        
+                        <div class="col-12 flex align-items-center justify-content-center">
+                            <button pButton pRipple type="submit" label="Iniciar sesión"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </p-card>
+    </div>
+</div>
+
+

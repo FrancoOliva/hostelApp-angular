@@ -43,9 +43,7 @@ export class HomeComponent implements OnInit {
       {
         label: 'Reportes',
         items: [
-          {label: 'Por día' },
-          {label: 'Por mes'},
-          {label: 'Por año'},
+          {label: 'Por día' }
         ]
       }
   ];
