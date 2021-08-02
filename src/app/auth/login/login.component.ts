@@ -22,12 +22,6 @@ export class LoginComponent implements OnInit {
 
   ingresar(){
 
-    // Si apretamos ingresar sin completar los datos
-    // if( this.loginBasico.invalid ){
-    //   this.loginBasico.markAllAsTouched();
-    //   return;
-    // }
-
     // Servicio 
     this.auth.login(this.loginBasico.value.email,this.loginBasico.value.password);
 

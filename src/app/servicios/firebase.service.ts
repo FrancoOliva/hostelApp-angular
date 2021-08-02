@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 export class FirebaseService {
 
   usuarioConectado: any;
+  loginError: string = "";
 
   constructor( private authentication: AngularFireAuth, private router: Router, private cloudFirestore: AngularFirestore ) { }
 
@@ -20,8 +21,8 @@ export class FirebaseService {
 
     this.authentication.signInWithEmailAndPassword(email, password).then((user) =>{
 
-      console.log('USUARIO AUTENTICADO CORRECTAMENTE');
-      console.log(user);
+      // console.log('USUARIO AUTENTICADO CORRECTAMENTE');
+      // console.log(user);
 
       this.usuarioConectado = user;
 
@@ -31,6 +32,19 @@ export class FirebaseService {
     }).catch((error) =>{
       const errorCode = error.code;
       const errorMessage = error.message;
+
+      if( errorCode == 'auth/wrong-password'){
+        this.loginError = 'Auth: Contraseña incorrecta.'
+        console.log(this.loginError);
+      } else if( errorCode == 'auth/user-not-found'){
+        this.loginError = 'Auth: El usuario no existe.'
+        console.log(this.loginError);
+      } else {
+        console.log(errorCode);
+        console.log(errorMessage);
+        this.loginError = errorMessage;
+      }  
+
     });
 
   }
@@ -38,17 +52,13 @@ export class FirebaseService {
 
   /** CLOUD FIRESTORE */
   guardarCliente(cliente: FormGroup){
-    const data = {
-      nombre: 'Pepitosh',
-      apellido: 'Oliva',
-      dni: '366234333'
-    };
+    const data = cliente;
 
-    // Guardar documento en CloudFirestore
-    this.cloudFirestore.collection("clientes").doc(data.dni).set(data).then( (docRef) =>{
-      console.log('Datos guardados correctamente');
+    // Guardar documento en CloudFirestore -> FUNCIONA
+    // this.cloudFirestore.collection("clientes").doc(data.dni).set(data).then( (docRef) =>{
+    //   console.log('Datos guardados correctamente');
       
-    });
+    // });
 
     
   }
