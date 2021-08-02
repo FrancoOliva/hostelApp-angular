@@ -7,14 +7,17 @@ import { AppComponent } from './app.component';
 
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
 import { AuthModule } from './auth/auth.module';
+import { PagesModule } from './pages/pages.module';
 
 
 /** Firebase */
 import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-
+import { AngularFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
-import { PagesModule } from './pages/pages.module';
+
+
 
 
 
@@ -32,13 +35,17 @@ import { PagesModule } from './pages/pages.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     PrimeNgModule,
-    AuthModule,
     PagesModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AuthModule,
+    AngularFirestoreModule
+    
 
   ],
   providers: [
-    AngularFireAuth
+    AngularFireAuth,
+    AngularFirestore
+
   ],
   bootstrap: [AppComponent]
 })

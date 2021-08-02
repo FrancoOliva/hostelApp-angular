@@ -8,6 +8,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -23,7 +24,8 @@ import { InputTextModule } from 'primeng/inputtext';
     DialogModule,
     DividerModule,
     CardModule,
-    InputTextModule
+    InputTextModule,
+    CalendarModule
   ]
 })
 export class PrimeNgModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FirebaseService } from '../../servicios/firebase.service';
 
 @Component({
   selector: 'app-registrar-cliente',
@@ -9,28 +10,34 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class RegistrarClienteComponent implements OnInit {
 
-  registrarCliente: FormGroup = this.fb.group({
-    nombre: [''],
-    apellido: [''],
-    edad: [''],
-    fNacimiento: [''],
-    dniPasaporte: [''],
-    nacionalidad: [''],
-    fIngreso: [''],
-    fPartida: [''],
-    sexo: [''],
-    email: [''],
-    importe: [''],
-    formaPago: ['']
+  date2!: Date;
+
+  registroCliente: FormGroup = this.fb.group({
+    nombre: ['', Validators.required ],
+    apellido: ['', Validators.required ],
+    edad: ['', Validators.required ],
+    fNacimiento: ['', Validators.required ],
+    dniPasaporte: ['', Validators.required ],
+    nacionalidad: ['', Validators.required ],
+    fIngreso: ['', Validators.required ],
+    fPartida: ['', Validators.required ],
+    sexo: ['', Validators.required ],
+    email: ['', Validators.required ]
   });
 
-  constructor( private fb: FormBuilder ) { }
+  constructor( private fb: FormBuilder, private db: FirebaseService) { }
 
   ngOnInit(): void {
+
+    
+
   }
 
-  guardar(){
-    console.log('Guardar cliente en Cloud Firestore');
+  guardar(){   
+    
+
+    this.db.guardarCliente(this.registroCliente);
+    
   }
 
 }

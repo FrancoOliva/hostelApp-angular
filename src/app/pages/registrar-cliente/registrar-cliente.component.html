@@ -3,7 +3,7 @@
 </div>
 
 
-<form autocomplete="off" [formGroup]="registrarCliente" (ngSubmit)="guardar()">
+<form autocomplete="off" [formGroup]="registroCliente" (ngSubmit)="guardar()">
     
     <div class="grid justify-content-center"> <!-- GRID - CONTENEDOR CENTRADO -->
 
@@ -14,77 +14,68 @@
                     <div class="col-12 md:col-6">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Nombre">         
+                            <input type="text" pInputText placeholder="Nombre" formControlName="nombre">         
                         </div>
                     </div>
                     <div class="col-12 md:col-6">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Apellido">         
+                            <input type="text" pInputText placeholder="Apellido" formControlName="apellido">         
                         </div>
                     </div>
                     <div class="col-12 md:col-6">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="number" pInputText placeholder="Edad">         
+                            <input type="number" pInputText placeholder="Edad" formControlName="edad">         
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-6">                        
+                        <div class="p-grid p-fluid">
+                            <div class="p-col-12 p-md-6">
+                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" inputId="navigators" [showIcon]="true" formControlName="fNacimiento" dateFormat="dd/mm/yy"></p-calendar> 
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 md:col-6">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Fecha de nacimiento">         
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-6">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Documento / Pasaporte">         
+                            <input type="text" pInputText placeholder="Documento / Pasaporte" formControlName="dniPasaporte">         
                         </div>
                     </div>
         
                     <div class="col-12 md:col-6">
                         <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Nacionalidad">         
+                            <span class="p-inputgroup-addon"><i class="pi pi-globe"></i></span>
+                            <input type="text" pInputText placeholder="Nacionalidad" formControlName="nacionalidad">         
                         </div>
                     </div>
                     
                     <div class="col-12 md:col-3">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Fecha de ingreso">         
+                        <div class="p-grid p-fluid">
+                            <div class="p-col-12 p-md-6">
+                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" inputId="navigators" [showIcon]="true" formControlName="fIngreso" dateFormat="dd/mm/yy"></p-calendar> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-3">
+                        <div class="p-grid p-fluid">
+                            <div class="p-col-12 p-md-6">
+                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" inputId="navigators" [showIcon]="true" formControlName="fPartida" dateFormat="dd/mm/yy"></p-calendar> 
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 md:col-3">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Fecha de partida">         
+                            <input type="text" pInputText placeholder="Sexo" formControlName="sexo">         
                         </div>
                     </div>
                     <div class="col-12 md:col-3">
                         <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Sexo">         
+                            <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+                            <input type="text" pInputText placeholder="Correo electrónico" formControlName="email">         
                         </div>
                     </div>
-                    <div class="col-12 md:col-3">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Correo electrónico">         
-                        </div>
-                    </div>
-                    <!-- <div class="col-12 md:col-3">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="number" pInputText placeholder="Importe">         
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-3">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Forma de pago">         
-                        </div>
-                    </div> -->
 
                     <!--BOTÓN GUARDAR CLIENTE-->
                     <div class="col-12 md:col-12 flex justify-content-end">
