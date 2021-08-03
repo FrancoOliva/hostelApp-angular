@@ -9,6 +9,8 @@ import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 
 
@@ -25,7 +27,9 @@ import { CalendarModule } from 'primeng/calendar';
     DividerModule,
     CardModule,
     InputTextModule,
-    CalendarModule
+    CalendarModule,
+    MultiSelectModule,
+    SelectButtonModule
   ]
 })
 export class PrimeNgModule { }

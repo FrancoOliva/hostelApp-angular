@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
 import { AuthModule } from './auth/auth.module';
 import { PagesModule } from './pages/pages.module';
+
+/** SUPER IMPORTANTE si queremos hacer peticiones HTTP a una API REST */
+import { HttpClientModule } from '@angular/common/http';
 
 
 /** Firebase */
@@ -31,6 +34,7 @@ import { environment } from 'src/environments/environment';
     AppComponent   
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

@@ -54,6 +54,8 @@ export class FirebaseService {
   guardarCliente(cliente: FormGroup){
     const data = cliente;
 
+    console.log('Guardar en DB', data);
+
     // Guardar documento en CloudFirestore -> FUNCIONA
     // this.cloudFirestore.collection("clientes").doc(data.dni).set(data).then( (docRef) =>{
     //   console.log('Datos guardados correctamente');

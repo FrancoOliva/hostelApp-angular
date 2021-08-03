@@ -46,7 +46,8 @@
                     <div class="col-12 md:col-6">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-globe"></i></span>
-                            <input type="text" pInputText placeholder="Nacionalidad" formControlName="nacionalidad">         
+                            <!-- <input type="text" pInputText placeholder="Nacionalidad" formControlName="pais">-->
+                            <p-multiSelect [options]="listaPaises" defaultLabel="Seleccionar país" optionLabel="translations.es" selectedItemsLabel="{0} items selected"></p-multiSelect>
                         </div>
                     </div>
                     
@@ -67,7 +68,8 @@
                     <div class="col-12 md:col-3">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Sexo" formControlName="sexo">         
+                            <!-- <input type="text" pInputText placeholder="Sexo" formControlName="sexo">-->
+                            <p-selectButton [options]="genero" optionLabel="label" optionValue="value" formControlName="genero"></p-selectButton>
                         </div>
                     </div>
                     <div class="col-12 md:col-3">
