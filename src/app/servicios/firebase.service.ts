@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormGroup } from '@angular/forms';
 import { DatosCliente } from '../pais/cliente.interface';
+import { Pagos } from '../pais/pagos.interface';
 
 
 @Injectable({
@@ -66,18 +67,42 @@ export class FirebaseService {
       fPartida    : cliente.value.fPartida,
       genero      : cliente.value.genero,
       email       : cliente.value.email,
-      flag          : cliente.value.pais[0].flag
+      flag        : cliente.value.pais[0].flag
     };
 
-    console.log('Guardar en DB', data);
+    // console.log('Guardar en DB', data);
 
-    // Guardar documento en CloudFirestore
+    // Guardar cliente en CloudFirestore
     this.cloudFirestore.collection("clientes").doc(data.dniPasaporte).set(data).then( (docRef) =>{
       console.log('Datos guardados correctamente');
       
     });
 
     
+  }
+
+  guardarPago(pago: FormGroup){
+
+    let data: Pagos = {
+      nombre    : pago.value.nombre,
+      apellido  : pago.value.apellido,
+      fIngreso  : pago.value.fIngreso,
+      fPartida  : pago.value.fPartida,
+      importe   : pago.value.importe,
+      fPago     : pago.value.fPago
+    }
+
+
+    // Guardar pago en CloudFirestore
+    this.cloudFirestore.collection('pagos').add(data).then((docRef) => {
+      console.log('Pago guardado correctamente en la base de datos.');
+    }).catch((error) =>{
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      console.log(errorCode);
+      console.log(errorMessage);
+    })
   }
 
 }
