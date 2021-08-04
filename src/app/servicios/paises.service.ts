@@ -4,16 +4,16 @@ import { Observable } from 'rxjs';
 import { Pais } from '../pais/pais.interface';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class PaisesService {
 
-  private baseURL: string = 'https://restcountries.eu/rest/v2/all?fields=name;translations';
+  private baseURL: string = 'https://restcountries.eu/rest/v2/all?fields=name;flag;translations';
 
+  private paises: Pais[] = [];
   
-
-
   constructor( private http: HttpClient ) { }
 
   obtenerPaises(): Observable<Pais[]> {

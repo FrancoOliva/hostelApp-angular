@@ -42,29 +42,21 @@
                             <input type="text" pInputText placeholder="Documento / Pasaporte" formControlName="dniPasaporte">         
                         </div>
                     </div>
-        
+
                     <div class="col-12 md:col-6">
                         <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+                            <input type="text" pInputText placeholder="Correo electrónico" formControlName="email">         
+                        </div>
+                    </div>
+        
+                    <div class="col-12 md:col-3">
+                        <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-globe"></i></span>
-                            <!-- <input type="text" pInputText placeholder="Nacionalidad" formControlName="pais">-->
-                            <p-multiSelect [options]="listaPaises" defaultLabel="Seleccionar país" optionLabel="translations.es" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                        <p-multiSelect [options]="listaPaises" defaultLabel="Seleccionar país" optionLabel="translations.es" selectedItemsLabel="{0} items selected" formControlName="pais"></p-multiSelect>
                         </div>
                     </div>
                     
-                    <div class="col-12 md:col-3">
-                        <div class="p-grid p-fluid">
-                            <div class="p-col-12 p-md-6">
-                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" inputId="navigators" [showIcon]="true" formControlName="fIngreso" dateFormat="dd/mm/yy"></p-calendar> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-3">
-                        <div class="p-grid p-fluid">
-                            <div class="p-col-12 p-md-6">
-                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" inputId="navigators" [showIcon]="true" formControlName="fPartida" dateFormat="dd/mm/yy"></p-calendar> 
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-12 md:col-3">
                         <div class="p-inputgroup">
                             <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
@@ -72,12 +64,22 @@
                             <p-selectButton [options]="genero" optionLabel="label" optionValue="value" formControlName="genero"></p-selectButton>
                         </div>
                     </div>
+
                     <div class="col-12 md:col-3">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
-                            <input type="text" pInputText placeholder="Correo electrónico" formControlName="email">         
+                        <div class="p-grid p-fluid">
+                            <div class="p-col-12 p-md-6">
+                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" inputId="navigators" [showIcon]="true" formControlName="fIngreso" dateFormat="dd/mm/yy" placeholder="Fecha de ingreso"></p-calendar> 
+                            </div>
                         </div>
                     </div>
+                    <div class="col-12 md:col-3">
+                        <div class="p-grid p-fluid">
+                            <div class="p-col-12 p-md-6">
+                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" inputId="navigators" [showIcon]="true" formControlName="fPartida" dateFormat="dd/mm/yy" placeholder="Fecha de partida"></p-calendar> 
+                            </div>
+                        </div>
+                    </div>
+                    
 
                     <!--BOTÓN GUARDAR CLIENTE-->
                     <div class="col-12 md:col-12 flex justify-content-end">
@@ -91,3 +93,5 @@
     </div>
 
 </form>
+
+

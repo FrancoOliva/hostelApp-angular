@@ -14,3 +14,7 @@ html, body {
     height: auto;
     width: 25vw;
 }
+
+img.flag {
+    width: 17px;
+}

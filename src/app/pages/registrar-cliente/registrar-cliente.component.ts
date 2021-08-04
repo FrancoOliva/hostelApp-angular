@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Pais } from 'src/app/pais/pais.interface';
+
 import { FirebaseService } from '../../servicios/firebase.service';
 import { PaisesService } from '../../servicios/paises.service';
 
@@ -15,6 +16,7 @@ export class RegistrarClienteComponent implements OnInit {
 
   date2!: Date;
   genero: any[];
+
   listaPaises: Pais[] = [];
 
   registroCliente: FormGroup = this.fb.group({
@@ -41,22 +43,37 @@ export class RegistrarClienteComponent implements OnInit {
       }
     ]
 
+    this.paises.obtenerPaises().subscribe( paises => {
+      this.listaPaises = paises;
+
+    });
+
    }
 
   ngOnInit(): void {
-
-    this.paises.obtenerPaises().subscribe( paises => {
-      this.listaPaises = paises;
-      console.log(this.listaPaises)
-    });
     
     
   }
 
-  guardar(){   
+  guardar(){ 
     
+    
+    
+    if( this.registroCliente.invalid){
 
-    this.db.guardarCliente(this.registroCliente);
+      console.log('Se intento crear un cliente sin completar el formulario');
+      console.log(this.registroCliente.status);
+      return;
+
+    } else {
+      
+      console.log('Formulario completo');
+      this.registroCliente.status
+
+      // mandamos el formulario a la DB
+      this.db.guardarCliente(this.registroCliente);
+    }
+    
     
   }
 

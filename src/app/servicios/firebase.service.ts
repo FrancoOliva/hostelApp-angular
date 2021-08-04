@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormGroup } from '@angular/forms';
+import { DatosCliente } from '../pais/cliente.interface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -52,15 +54,28 @@ export class FirebaseService {
 
   /** CLOUD FIRESTORE */
   guardarCliente(cliente: FormGroup){
-    const data = cliente;
+    
+    let data: DatosCliente = {
+      nombre      : cliente.value.nombre,
+      apellido    : cliente.value.apellido,
+      edad        : cliente.value.edad, 
+      fNacimiento : cliente.value.fNacimiento,
+      dniPasaporte: cliente.value.dniPasaporte,
+      pais        : cliente.value.pais[0].name,
+      fIngreso    : cliente.value.fIngreso,
+      fPartida    : cliente.value.fPartida,
+      genero      : cliente.value.genero,
+      email       : cliente.value.email,
+      flag          : cliente.value.pais[0].flag
+    };
 
     console.log('Guardar en DB', data);
 
-    // Guardar documento en CloudFirestore -> FUNCIONA
-    // this.cloudFirestore.collection("clientes").doc(data.dni).set(data).then( (docRef) =>{
-    //   console.log('Datos guardados correctamente');
+    // Guardar documento en CloudFirestore
+    this.cloudFirestore.collection("clientes").doc(data.dniPasaporte).set(data).then( (docRef) =>{
+      console.log('Datos guardados correctamente');
       
-    // });
+    });
 
     
   }
