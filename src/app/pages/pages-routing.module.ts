@@ -4,6 +4,8 @@ import { HomeComponent } from './home/home.component';
 import { RegistrarClienteComponent } from './registrar-cliente/registrar-cliente.component';
 import { RegistrarPagoComponent } from './registrar-pago/registrar-pago.component';
 import { RegistrarGastoComponent } from './registrar-gasto/registrar-gasto.component';
+import { MatrimonialesComponent } from './matrimoniales/matrimoniales.component';
+import { CompartidasComponent } from './compartidas/compartidas.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,14 @@ const routes: Routes = [
       {
         path: 'registrar-gastos',
         component: RegistrarGastoComponent
+      },
+      {
+        path: 'matrimoniales',
+        component: MatrimonialesComponent
+      },
+      {
+        path: 'compartidas',
+        component: CompartidasComponent
       },
       {
         path: '**',

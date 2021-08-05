@@ -3,8 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormGroup } from '@angular/forms';
-import { DatosCliente } from '../pais/cliente.interface';
-import { Pagos } from '../pais/pagos.interface';
+import { DatosCliente } from '../interfaces/cliente.interface';
+import { Pagos } from '../interfaces/pagos.interface';
+import { Gastos } from '../interfaces/gastos.interface';
 
 
 @Injectable({
@@ -81,21 +82,43 @@ export class FirebaseService {
     
   }
 
-  guardarPago(pago: FormGroup){
+  guardarPago(pagos: FormGroup){
 
     let data: Pagos = {
-      nombre    : pago.value.nombre,
-      apellido  : pago.value.apellido,
-      fIngreso  : pago.value.fIngreso,
-      fPartida  : pago.value.fPartida,
-      importe   : pago.value.importe,
-      fPago     : pago.value.fPago
+      nombre    : pagos.value.nombre,
+      apellido  : pagos.value.apellido,
+      fIngreso  : pagos.value.fIngreso,
+      fPartida  : pagos.value.fPartida,
+      importe   : pagos.value.importe,
+      fPago     : pagos.value.fPago
     }
 
 
     // Guardar pago en CloudFirestore
     this.cloudFirestore.collection('pagos').add(data).then((docRef) => {
       console.log('Pago guardado correctamente en la base de datos.');
+    }).catch((error) =>{
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      console.log(errorCode);
+      console.log(errorMessage);
+    })
+  }
+
+  guardarGasto(gastos: FormGroup){
+
+    let data: Gastos = {
+      nombre: gastos.value.nombre,
+      motivo: gastos.value.motivo,
+      fGasto: gastos.value.fGasto,
+      importe: gastos.value.importe      
+    }
+
+
+    // Guardar pago en CloudFirestore
+    this.cloudFirestore.collection('gastos').add(data).then((docRef) => {
+      console.log('Gasto guardado correctamente en la base de datos.');
     }).catch((error) =>{
       const errorCode = error.code;
       const errorMessage = error.message;

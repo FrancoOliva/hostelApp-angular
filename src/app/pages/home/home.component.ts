@@ -30,20 +30,29 @@ export class HomeComponent implements OnInit {
           },
           {
             label: 'Gastos',
-            routerLink: 'registrar-pagos'}
+            routerLink: 'registrar-gastos'
+          }
         ]
       },
       {
         label: 'Habitaciones',
         items: [
-          {label: 'Matrimoniales' },
-          {label: 'Compartidas'},
+          {
+            label: 'Matrimoniales',
+            routerLink: 'matrimoniales'
+          },
+          {
+            label: 'Compartidas',
+            routerLink: 'compartidas'
+          }
         ]
       },
       {
         label: 'Reportes',
         items: [
-          {label: 'Por día' }
+          {
+            label: 'Por día'
+          }
         ]
       }
   ];

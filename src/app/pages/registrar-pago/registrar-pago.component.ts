@@ -37,7 +37,10 @@ export class RegistrarPagoComponent implements OnInit {
 
   guardar(){
 
-    console.log(this.registrarPago.value);
+    if(this.registrarPago.invalid){
+      console.log('El formulario es invalido. Verificar campos incompletos.');
+      return;
+    }
 
     // Pasamos el formulario completado como parámetro
     this.db.guardarPago(this.registrarPago);

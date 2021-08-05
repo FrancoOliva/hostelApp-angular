@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Pais } from 'src/app/pais/pais.interface';
+import { Pais } from 'src/app/interfaces/pais.interface';
 
 import { FirebaseService } from '../../servicios/firebase.service';
 import { PaisesService } from '../../servicios/paises.service';

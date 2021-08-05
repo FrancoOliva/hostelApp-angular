@@ -8,6 +8,8 @@ import { RegistrarPagoComponent } from './registrar-pago/registrar-pago.componen
 import { HomeComponent } from './home/home.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatrimonialesComponent } from './matrimoniales/matrimoniales.component';
+import { CompartidasComponent } from './compartidas/compartidas.component';
 
 
 
@@ -18,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RegistrarClienteComponent,
     RegistrarGastoComponent,
     RegistrarPagoComponent,
+    MatrimonialesComponent,
+    CompartidasComponent,
     
     
   ],
