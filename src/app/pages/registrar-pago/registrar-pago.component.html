@@ -10,74 +10,92 @@ autocomplete="off"
     
     <div class="grid justify-content-center"> <!-- GRID - CONTENEDOR CENTRADO -->
 
-        <div class="col-12 md:col-8"> 
+        <div class="col-12 md:col-4"> 
 
             <p-card>
-                <div class="grid"> <!-- GRID - CONTENEDOR ANIDADO -->
-                    <div class="col-12 md:col-3">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Nombre" formControlName="nombre">         
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-3">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <input type="text" pInputText placeholder="Apellido" formControlName="apellido">         
-                        </div>
-                    </div>           
-                    <div class="col-12 md:col-3">
-                        <div class="p-grid p-fluid">
-                            <div class="p-col-12 p-md-6">
-                                <p-calendar 
-                                [monthNavigator]="true" 
-                                [yearNavigator]="true" 
-                                yearRange="2021:2030" inputId="navigators" 
-                                [showIcon]="true" 
-                                formControlName="fIngreso" 
-                                dateFormat="dd/mm/yy" 
-                                placeholder="Fecha de ingreso"></p-calendar> 
+
+                <div class="grid justify-content-center"> <!-- GRID - CONTENEDOR ANIDADO -->
+                    <div class="col-12 md:col-7">
+
+                        <div class="col-12 md:col-12">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                                <input type="text" pInputText placeholder="Nombre" formControlName="nombre">         
                             </div>
                         </div>
+                        <div class="col-12 md:col-12">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                                <input type="text" pInputText placeholder="Apellido" formControlName="apellido">         
+                            </div>
+                        </div>    
+
                     </div>
-                    <div class="col-12 md:col-3">
-                        <div class="p-grid p-fluid">
-                            <div class="p-col-12 p-md-6">
-                                <p-calendar 
-                                [monthNavigator]="true" 
-                                [yearNavigator]="true" 
-                                yearRange="2021:2030" 
-                                inputId="navigators" 
-                                [showIcon]="true" 
-                                formControlName="fPartida" 
-                                dateFormat="dd/mm/yy" 
-                                placeholder="Fecha de partida"></p-calendar> 
+
+                    <div class="col-12 md:col-7">
+
+                        <div class="col">
+                            <div class="p-grid p-fluid">
+                                <div class="p-col-12 p-md-6">
+                                    <p-calendar 
+                                    [monthNavigator]="true" 
+                                    [yearNavigator]="true" 
+                                    yearRange="2021:2030" inputId="navigators" 
+                                    [showIcon]="true" 
+                                    formControlName="fIngreso" 
+                                    dateFormat="dd/mm/yy" 
+                                    placeholder="Fecha de ingreso"></p-calendar> 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 md:col-3">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-dollar"></i></span>
-                            <input type="number" pInputText placeholder="Importe" formControlName="importe">         
+                        <div class="col">
+                            <div class="p-grid p-fluid">
+                                <div class="p-col-12 p-md-6">
+                                    <p-calendar 
+                                    [monthNavigator]="true" 
+                                    [yearNavigator]="true" 
+                                    yearRange="2021:2030" 
+                                    inputId="navigators" 
+                                    [showIcon]="true" 
+                                    formControlName="fPartida" 
+                                    dateFormat="dd/mm/yy" 
+                                    placeholder="Fecha de partida"></p-calendar> 
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                    <div class="col-12 md:col-3">
-                        <div class="p-inputgroup">
-                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                            <p-selectButton [options]="fPago" optionLabel="label" optionValue="value" formControlName="fPago"></p-selectButton>
+
+                    <div class="col-12 md:col-7">
+
+                        <div class="col">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-dollar"></i></span>
+                                <input type="number" pInputText placeholder="Importe" formControlName="importe">         
+                            </div>
                         </div>
+                        <div class="col">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-dollar"></i></span>
+                                <p-selectButton [options]="fPago" optionLabel="label" optionValue="value" formControlName="fPago"></p-selectButton>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <p>
+                                <strong>Importante:</strong> Si el pago es con <strong>TC</strong> poner el importe con el % de recargo correspondiente aplicado.
+                            </p>
+                        </div> 
+
+                        <!--BOTÓN GUARDAR CLIENTE-->
+                        <div class="col-12 col flex justify-content-end">
+                            <button pButton type="submit" label="Guardar" class="p-button-success mt-4"></button>
+                        </div>
+
                     </div>
-                    <div class="col-12">
-                        <p>
-                            <strong>Importante:</strong> Si el pago es con <strong>TC</strong> poner el importe con el % de recargo correspondiente aplicado.
-                        </p>
-                    </div>             
-                    
-                    <!--BOTÓN GUARDAR CLIENTE-->
-                    <div class="col-12 md:col-12 flex justify-content-end">
-                        <button pButton type="submit" label="Guardar" class="p-button-success mt-4"></button>
-                    </div>
+
                 </div>    
+                
             </p-card>
 
         </div>
