@@ -1,1 +1,33 @@
-<p>matrimoniales works!</p>
+<div class="grid m-5">
+    <div class="col-12 md:col-2">
+        <p-button (click)="showBasicDialog()" icon="pi pi-user-edit" label="Crear Habitación"></p-button>
+    </div>
+    <div class="col-12 md:col-5">
+        Mostrar habitaciones
+    </div>
+    <div class="col-12 md:col-5">
+        Mostrar camas de la habitación seleccionada
+    </div>
+</div>
+
+
+<!--DIALOG-->
+<p-dialog header="Creando habitación" [(visible)]="display" [style]="{width: '25vw'}" [baseZIndex]="10000">
+
+    <form [formGroup]="habitacionForm" (ngSubmit)="crearHabitacion()">
+
+        <div class="grid">
+            <div class="col-12 md:col-12 p-inputgroup">
+                <input type="text" pInputText placeholder="Nombre de la habitación" formControlName="nombre">
+            </div>
+            <div class="col-12 md:col-12 p-inputgroup">
+                <input type="text" pInputText placeholder="Cantidad de camas" formControlName="cantidadCamas">
+            </div>
+            <div class="col-12 md:col-12 p-inputgroup justify-content-end">
+                <p-button type="submit" label="Crear" styleClass="p-button-text"></p-button>
+            </div>
+        </div>        
+
+    </form>
+
+</p-dialog>
