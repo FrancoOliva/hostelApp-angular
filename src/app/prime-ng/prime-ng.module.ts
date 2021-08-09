@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { AccordionModule } from 'primeng/accordion';
 
 
 
@@ -29,7 +30,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     InputTextModule,
     CalendarModule,
     MultiSelectModule,
-    SelectButtonModule
+    SelectButtonModule,
+    AccordionModule
   ]
 })
 export class PrimeNgModule { }

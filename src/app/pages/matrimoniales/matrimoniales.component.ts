@@ -11,9 +11,11 @@ export class MatrimonialesComponent implements OnInit {
 
   display: boolean = false;
 
+  habitaciones: any[] = [];
+
   habitacionForm: FormGroup = this.fb.group({
-    nombre: ['Habitación ejemplo', Validators.required ],
-    cantidadCamas: [1, [ Validators.required, Validators.min(0)] ]
+    nombre: ['' , Validators.required ],
+    cantidadCamas: [ null , [ Validators.required, Validators.min(0)] ]
   })  
 
   constructor( private fb: FormBuilder) { }

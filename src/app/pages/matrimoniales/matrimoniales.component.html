@@ -3,10 +3,53 @@
         <p-button (click)="showBasicDialog()" icon="pi pi-user-edit" label="Crear Habitación"></p-button>
     </div>
     <div class="col-12 md:col-5">
-        Mostrar habitaciones
+
+        <div class="grid">
+            
+                <div class="col-12 md:col-5 mr-6">
+                    <p-card header="Habitación Matrimonial A1" [style]="{'width': '22rem', 'margin-bottom': '1em'}">
+                        
+                        <img alt="Card" src="assets/camaDoble3.png" class="img-matrimonial">
+
+                    </p-card>
+                </div>
+
+                <div class="col-12 md:col-5 mr-6">
+                    <p-card header="Habitación Matrimonial A1" [style]="{'width': '22rem', 'margin-bottom': '1em'}">
+                        
+                        <img alt="Card" src="assets/camaDoble3.png" class="img-matrimonial">
+
+                    </p-card>
+                </div>
+
+                
+            
+            
+        </div>
+        
+        
+
+        
+
     </div>
     <div class="col-12 md:col-5">
-        Mostrar camas de la habitación seleccionada
+
+        <p-card header="Habitación Matrimonial A1" >
+            
+            <p-accordion>
+                <p-accordionTab header="Cama 1">
+                   Información del cliente
+                </p-accordionTab>
+                <p-accordionTab header="Cama 2">
+                    Información del cliente
+                </p-accordionTab>
+                <p-accordionTab header="Cama 3">
+                    Información del cliente   
+                </p-accordionTab>
+            </p-accordion>
+            
+        </p-card>       
+
     </div>
 </div>
 
