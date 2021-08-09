@@ -1,6 +1,7 @@
 export interface Habitacion {
     id: string;
     nombre: string;
-    cantidadCamas: number;
+    estado: string;
     srcImg: string;
+    
 }
