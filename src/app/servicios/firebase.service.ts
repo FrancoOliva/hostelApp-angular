@@ -6,6 +6,9 @@ import { FormGroup } from '@angular/forms';
 import { DatosCliente } from '../interfaces/cliente.interface';
 import { Pagos } from '../interfaces/pagos.interface';
 import { Gastos } from '../interfaces/gastos.interface';
+import { Habitacion } from '../interfaces/habitacion.interface';
+import { identifierModuleUrl } from '@angular/compiler';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -15,6 +18,14 @@ export class FirebaseService {
 
   usuarioConectado: any;
   loginError: string = "";
+  private _habitacionesM: Habitacion[] = [];
+
+  public get habitacionesM(): Habitacion[] {
+    return [...this._habitacionesM];
+  }
+  
+
+
 
   constructor( private authentication: AngularFireAuth, private router: Router, private cloudFirestore: AngularFirestore ) { }
 
@@ -127,5 +138,14 @@ export class FirebaseService {
       console.log(errorMessage);
     })
   }
+
+  crearHabitacion(habitacion: Habitacion){
+
+    console.log('Habitación Creada', habitacion);
+    
+    // this.cloudFirestore.collection('habitaciones_matrimoniales').doc(habitacion.id).set(habitacion);
+  }
+
+  
 
 }
