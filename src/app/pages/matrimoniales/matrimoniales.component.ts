@@ -69,30 +69,20 @@ export class MatrimonialesComponent implements OnInit {
   crearCamas(habID: string){
     console.log('Crear camas', habID);
 
+    
+
     for(let i = 0; i < this.habitacionesM.length; i++){
 
-      if( this.habitacionesM[i].id == habID ){
+      if( this.habitacionesM[i].id == habID && this.habitacionesM[i].camas.length < 2 ){
         this.habitacionesM[i].camas.push(
           {
-          estado: 'ocupada',
-          cliente: 'Franco Oliva',
-          fIngreso: new Date(),
-          fPartida: new Date()
-        },
-        {
-          estado: 'ocupada',
-          cliente: 'Franco Perez',
-          fIngreso: new Date(),
-          fPartida: new Date()
-        },
-        {
-          estado: 'ocupada',
-          cliente: 'Franco Paz',
+          estado: 'Libre',
+          cliente: 'Sin asignar',
           fIngreso: new Date(),
           fPartida: new Date()
         })
       } else {
-        console.log('La cama no se creo en la habitación seleccionada. Ver!');
+        console.log('La cama no se creo en la habitación seleccionada. Solo se puede crear una cama en habitaciones matrimoniales.');
       }
       
     }
