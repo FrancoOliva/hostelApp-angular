@@ -8,9 +8,9 @@
         </div>
     </div>
 
-    <div class="col-12 md:col-10">
+    <div class="col-12 md:col-8">
 
-        <div class="card flex flex-row flex-wrap mb-4" *ngFor="let habitacion of habitacionesM; let i = index;">
+        <div class="card flex flex-row flex-nowrap mb-4" *ngFor="let habitacion of habitacionesM; let i = index;">
             <!--Habitación-->
             <div class="flex align-items-start justify-content-center mr-5">                
                     <p-card [header]="habitacion.nombre" [style]="{'width': '25rem'}">
@@ -32,6 +32,7 @@
             
                     </p-card>        
             </div>
+            
             <!--Camas-->
             <div class="flex align-items-start justify-content-center" *ngIf="habitacion.mostrarCamas">
                 
@@ -41,21 +42,22 @@
                         <span>Esta habitación no tiene camas creadas.</span>
                     </div>
                     
-                    <p-accordion *ngFor="let camas of habitacion.camas; let i = index">
-                        <p-accordionTab [header]="'Cama ' + (i+1)">
-                           {{ habitacion.camas | json }}
-                        </p-accordionTab>
-                    </p-accordion>
+                    <div class="flex flex-column">
+                        <div class="flex align-items-start justify-content-center" *ngFor="let camas of habitacion.camas; let i = index">
+                            <p-accordion>
+                                <p-accordionTab [header]="'Cama ' + (i+1)">
+                                   {{ habitacion.camas[i] | json }}
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+                    </div>
                     
                     
                 </p-card> 
-            </div>
-            <!-- LOGRAMOS CREAR CAMAS DE FORMA DINAMICA PERO SE CREAN ABAJO DE LA HABITACIÓN CREADA Y NO AL LADO, VER!!!-->
 
-            
+            </div>            
             
         </div>
-
         
     </div>
 

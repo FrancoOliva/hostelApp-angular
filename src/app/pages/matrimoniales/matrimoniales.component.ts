@@ -72,9 +72,22 @@ export class MatrimonialesComponent implements OnInit {
     for(let i = 0; i < this.habitacionesM.length; i++){
 
       if( this.habitacionesM[i].id == habID ){
-        this.habitacionesM[i].camas.push({
-          estado: 'libre',
+        this.habitacionesM[i].camas.push(
+          {
+          estado: 'ocupada',
           cliente: 'Franco Oliva',
+          fIngreso: new Date(),
+          fPartida: new Date()
+        },
+        {
+          estado: 'ocupada',
+          cliente: 'Franco Perez',
+          fIngreso: new Date(),
+          fPartida: new Date()
+        },
+        {
+          estado: 'ocupada',
+          cliente: 'Franco Paz',
           fIngreso: new Date(),
           fPartida: new Date()
         })
