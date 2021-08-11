@@ -139,12 +139,7 @@ export class FirebaseService {
     })
   }
 
-  crearHabitacion(habitacion: Habitacion){
-
-    console.log('Habitación Creada', habitacion);
-    
-    // this.cloudFirestore.collection('habitaciones_matrimoniales').doc(habitacion.id).set(habitacion);
-  }
+  /** PENDIENTE VER BIEN CLOUDFIRESTORE */
 
   
 

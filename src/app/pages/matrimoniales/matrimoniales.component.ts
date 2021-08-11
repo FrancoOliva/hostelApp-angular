@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Habitacion } from 'src/app/interfaces/habitacion.interface';
+import { Camas } from '../../interfaces/habitacion.interface';
+
 import { FirebaseService } from '../../servicios/firebase.service';
 
 @Component({
@@ -17,18 +19,18 @@ export class MatrimonialesComponent implements OnInit {
     nombre: ['Habitación Matrimonial A1' , Validators.required ]
   });
 
-  habitacionesM: Habitacion[] = [  ];
+  listadoHabitaciones: Habitacion[] =  [];
+  listadoCamasMatrimoniales: Camas[] = [];
+
+  mensaje: string = 'No existe ninguna habitación creada.';
 
   constructor( private fb: FormBuilder, private db: FirebaseService ) {
-
-    
     
    }
 
   ngOnInit(): void {
 
-    console.log(this.habitacionesM);
-
+    console.log(this.listadoCamasMatrimoniales.length);
     
   }
 
@@ -36,56 +38,43 @@ export class MatrimonialesComponent implements OnInit {
     this.display = true;
   }
 
+  /** CREAR HABITACIONES / CAMAS  */
+
   crearHabitacion(){
 
-    this.habitacionesM.push({
+    this.listadoHabitaciones.push({
       id: this.habitacionForm.value.id,
       nombre: this.habitacionForm.value.nombre,
       estado: 'libre',
       srcImg: 'assets/camaDoble3.png',
-      camas: [],
-      mostrarCamas: false
+      mostrarCamas: false,
+      camas: []
+    });
+    
+    //this.habitacionForm.reset();    
+    this.display = false;
+
+    console.log(this.listadoHabitaciones.length);
+  }
+
+  verCamas(index: number){
+
+    this.listadoHabitaciones[index].mostrarCamas = true;    
+
+  }
+
+  crearCamas(index: number){
+       
+
+    this.listadoHabitaciones[index].camas.push({
+      estado: 'Sin ocupar',
+      cliente: 'Sin asignar',
+      fIngreso: new Date(),
+      fPartida: new Date()
     });
 
-    
-    this.habitacionForm.reset();
-    
-    this.display = false;
-  }
+    console.log(this.listadoHabitaciones[index].camas);
 
-  verCamas(habID: string){
-    console.log('Mostrar camas', habID);
-
-    for(let i = 0; i < this.habitacionesM.length; i++){
-
-      if( this.habitacionesM[i].id == habID ){
-        this.habitacionesM[i].mostrarCamas = true;
-      } else {
-        this.habitacionesM[i].mostrarCamas = false;
-      }
-    }
-  }
-
-  crearCamas(habID: string){
-    console.log('Crear camas', habID);
-
-    
-
-    for(let i = 0; i < this.habitacionesM.length; i++){
-
-      if( this.habitacionesM[i].id == habID && this.habitacionesM[i].camas.length < 2 ){
-        this.habitacionesM[i].camas.push(
-          {
-          estado: 'Libre',
-          cliente: 'Sin asignar',
-          fIngreso: new Date(),
-          fPartida: new Date()
-        })
-      } else {
-        console.log('La cama no se creo en la habitación seleccionada. Solo se puede crear una cama en habitaciones matrimoniales.');
-      }
-      
-    }
   }
 
 
