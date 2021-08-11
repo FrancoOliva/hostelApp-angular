@@ -15,8 +15,8 @@ export class MatrimonialesComponent implements OnInit {
   display: boolean = false;
 
   habitacionForm: FormGroup = this.fb.group({
-    id: ['HMA1', Validators.required],
-    nombre: ['Habitación Matrimonial A1' , Validators.required ]
+    id: ['', Validators.required],
+    nombre: ['' , Validators.required ]
   });
 
   listadoHabitaciones: Habitacion[] =  [];

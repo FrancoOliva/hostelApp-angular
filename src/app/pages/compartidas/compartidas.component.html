@@ -1,1 +1,82 @@
-<p>compartidas works!</p>
+<div class="grid m-5">
+
+    <div class="col-12 md:col-2">
+        <button pButton pRipple type="button" label="Crear Habitación" class="p-button-success" (click)="showBasicDialog()" class="p-button-success" icon="pi pi-user-edit"></button>
+        
+        <div class="mt-3" *ngIf="listadoHabitaciones.length == 0">
+            <span> No hay habitaciones creadas. </span>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-10">
+        <!-- Habitaciones -->
+        <div *ngFor="let habitacion of listadoHabitaciones; let i = index;" class="mb-2">
+            <div class="grid">
+                <div class="col-12 md:col-4">
+                    <p-card [header]="habitacion.nombre" [style]="{'width': '25rem'}">
+
+                        <img alt="Card" [src]="habitacion.srcImg" class="img-matrimonial">
+        
+                        <ng-template pTemplate="footer">
+                            <div class="flex flex-wrap">
+                                <div class="flex align-items-center justify-content-center mr-2">
+                                    <button pButton pRipple type="button" label="Ver Camas" (click)="verCamas(i)" class="p-button-success"></button>
+                                </div>
+                                <div class="flex align-items-center justify-content-center mr-2">
+                                    <button pButton pRipple type="button" label="Crear Camas" (click)="crearCamas(i)" class="p-button-success"></button>
+                                </div>
+                            </div>
+                        </ng-template>
+        
+                    </p-card>
+                </div>
+                <!-- Listado Camas -->
+                <div class="col-12 md:col-8" *ngIf="habitacion.mostrarCamas">
+                    <p-card [header]="habitacion.nombre">
+                        <div class="mt-3" *ngIf="habitacion.camas.length == 0">
+                            <span> No hay camas creadas. </span>
+                        </div>
+                        <!-- Camas creadas-->
+                        <div class="flex flex-row flex-wrap" >
+                            <div class="flex align-items-center justify-content-center" style="min-width: 200px;"
+                                *ngFor="let cama of habitacion.camas; let i = index">
+                                    <p-accordion class="mr-2 mb-2">
+                                        <p-accordionTab [header]="'Cama ' + (i)">
+                                            {{ cama | json }}
+                                        </p-accordionTab>
+                                    </p-accordion>
+                                </div>
+                        </div>
+                    </p-card>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!--DIALOG - Creando Habitación -->
+<p-dialog header="Creando habitación" [(visible)]="display" [style]="{width: '25vw'}" [baseZIndex]="10000">
+
+    <form [formGroup]="habitacionForm" (ngSubmit)="crearHabitacion()">
+
+        <div class="grid">
+
+            <div class="col-12 md:col-12 p-inputgroup">
+                <input type="text" pInputText placeholder="ID" formControlName="id">
+            </div>
+
+            <div class="col-12 md:col-12 p-inputgroup">
+                <input type="text" pInputText placeholder="Nombre habitación" formControlName="nombre">
+            </div>
+
+            <div class="col-12 md:col-12 p-inputgroup justify-content-end">
+                <button pButton pRipple type="submit" label="Crear" class="p-button-success"></button>
+            </div>
+        </div>        
+
+    </form>
+
+</p-dialog>

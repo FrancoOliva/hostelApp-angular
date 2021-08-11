@@ -9,7 +9,7 @@ import { CompartidasComponent } from './compartidas/compartidas.component';
 
 const routes: Routes = [
   {
-    path: 'inicio',
+    path: '',
     component: HomeComponent,
     children: [
       {
