@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     }
 
     // Servicio
-    console.log('Iniciando...');
+    // console.log('Iniciando...');
     this.auth.login(this.loginBasico.value.email,this.loginBasico.value.password);
     this.loginBasico.reset();
 

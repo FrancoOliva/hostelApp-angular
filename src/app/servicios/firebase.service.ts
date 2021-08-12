@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
 import { DatosCliente } from '../interfaces/cliente.interface';
 import { Pagos } from '../interfaces/pagos.interface';
 import { Gastos } from '../interfaces/gastos.interface';
-import { Habitacion } from '../interfaces/habitacion.interface';
+import { Camas, Habitacion } from '../interfaces/habitacion.interface';
 
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase';
@@ -19,14 +19,7 @@ export class FirebaseService {
 
   usuarioConectado: any;
   loginError: string = "";
-  private _habitacionesM: Habitacion[] = [];
-
-  hmRef = this.cloudFirestore.collection('habitaciones_matrimoniales');
-
-  public get habitacionesM(): Habitacion[] {
-    return [...this._habitacionesM];
-  }
-
+  
 
   constructor( private authentication: AngularFireAuth, private router: Router, private cloudFirestore: AngularFirestore ) { }
 
@@ -142,41 +135,42 @@ export class FirebaseService {
 
   /** PENDIENTE VER BIEN CLOUDFIRESTORE */
   
-  crearHabitacion(){
+  crearHabitacion(dato:Habitacion){
 
-    // this.hmRef.doc('HMA1').set({
-    //   id: 'HMA1',
-    //   nombre: 'Habitación Matrimonial A1',
-    //   srcImg: 'assets/camaDoble3.png',
-    //   mostrarCamas: false,
-    //   estado: 'libre',
-    //   camas: [
-    //     {
-    //       estado: 'Sin ocupar',
-    //       cliente: 'Sin asignar',
-    //       fIngreso: new Date(),
-    //       fPartida: new Date()
-    //     }
-    //   ]
-    // })
+    this.cloudFirestore.collection('habitaciones_matrimoniales').doc(dato.id).set(dato).then(()=>{
+      // console.log('Habitación creada con éxito.');
+    }).catch((error)=>{
+      console.log(error.code);
+      console.log(error.message);
+    })
   }
 
-  // obtenerHabitaciones(): Observable<Habitacion>{
+  obtenerHabitaciones(): Observable<Habitacion[]>{
 
-  //   return this.hmRef.doc<any>('HMA1').valueChanges();
+     return this.cloudFirestore.collection<Habitacion>('habitaciones_matrimoniales').valueChanges();
     
-  // }
+  }
 
-  crearCamas(){
+  crearCamas(id_habitacion:string){
 
-    // this.hmRef.doc('HMA1').update({
-    //   camas: {
-    //     estado: 'ocupada',
-    //     cliente: 'Pepito Pescador',
-    //     fIngreso : '20/20/20',
-    //     fPartida: '20/20/20'
-    //   }
-    // })
+    this.cloudFirestore.collection('camas_matrimoniales').add({
+      id      : id_habitacion, 
+      estado  : 'Sin ocupar',
+      cliente : 'Sin asignar',
+      fIngreso: new Date(),
+      fPartida: new Date(),
+    }).then((doc) => {
+      // console.log('Cama creada con éxito.');
+      
+    }).catch((error) =>{
+      console.log(error.code);
+      console.log(error.message);
+    });
+
+  }
+
+  obtenerCamas():Observable<Camas[]>{
+    return this.cloudFirestore.collection<Camas>('camas_matrimoniales').valueChanges();
   }
 
   

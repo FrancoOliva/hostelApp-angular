@@ -20,10 +20,10 @@
                         <ng-template pTemplate="footer">
                             <div class="flex flex-wrap">
                                 <div class="flex align-items-center justify-content-center mr-2">
-                                    <button pButton pRipple type="button" label="Ver Camas" (click)="verCamas(i)" class="p-button-success"></button>
+                                    <button pButton pRipple type="button" label="Ver Camas" (click)="verCamas(habitacion.id)" class="p-button-success"></button>
                                 </div>
                                 <div class="flex align-items-center justify-content-center mr-2">
-                                    <button pButton pRipple type="button" label="Crear Camas" (click)="crearCamas(i)" class="p-button-success"></button>
+                                    <button pButton pRipple type="button" label="Crear Camas" (click)="crearCamas(habitacion.id)" class="p-button-success"></button>
                                 </div>
                             </div>
                         </ng-template>
@@ -33,13 +33,13 @@
                 <!-- Listado Camas -->
                 <div class="col-12 md:col-8" *ngIf="habitacion.mostrarCamas">
                     <p-card [header]="habitacion.nombre">
-                        <div class="mt-3" *ngIf="habitacion.camas.length == 0">
-                            <span> No hay camas creadas. </span>
+                        <div class="mt-3" *ngIf="mostrarCamas.length == 0">
+                            <span> {{mensaje}} </span>
                         </div>
                         <!-- Camas creadas-->
                         <div class="flex flex-row flex-wrap" >
                             <div class="flex align-items-center justify-content-center" style="min-width: 200px;"
-                                *ngFor="let cama of habitacion.camas; let i = index">
+                                *ngFor="let cama of mostrarCamas; let i = index">
                                     <p-accordion class="mr-2 mb-2">
                                         <p-accordionTab [header]="'Cama ' + (i+1)">
                                             {{ cama | json }}
@@ -105,10 +105,10 @@
 
         <div class="grid">
             <div class="col-12 md:col-12 p-inputgroup">
-                <p>
+                <span>
                     Es muy importante que el <strong>ID</strong> tenga relación con el nombre de la habitación. 
                     Ej: 'HMA1 o hma1' para 'Habitación Matrimonial A1', etc.
-                </p>
+                </span>
             </div>
 
             <div class="col-12 md:col-12 p-inputgroup">

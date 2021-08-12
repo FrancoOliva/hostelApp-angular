@@ -26,9 +26,14 @@ export class MatrimonialesComponent implements OnInit {
   });
 
   listadoHabitaciones: Habitacion[] =  [];
+  listadoCamasMatrimoniales: Camas[] = [];
+
+  mensaje: string = 'No hay camas creadas.';
+
+  mostrarCamas: Camas[] = [];
   
 
-  mensaje: string = 'No existe ninguna habitación creada.';
+  
 
   constructor( private fb: FormBuilder, private db: FirebaseService ) {
 
@@ -38,7 +43,32 @@ export class MatrimonialesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+    this.db.obtenerHabitaciones().subscribe((querySnapshot) => {
+
+      // Limpiamos el arreglo para evitar errores
+      // cuando creamos una habitación nueva
+      this.listadoHabitaciones = [];
+      
+      querySnapshot.forEach((doc) => {
+        
+        this.listadoHabitaciones.push(doc);
+
+      })
+      
+    });
+
+    this.db.obtenerCamas().subscribe((querySnapshot) =>{
+
+      this.listadoCamasMatrimoniales = [];
+
+      querySnapshot.forEach((doc) => {
+        
+        this.listadoCamasMatrimoniales.push(doc);
+
+      });
+      
+    });
+
     
   }
 
@@ -50,40 +80,58 @@ export class MatrimonialesComponent implements OnInit {
 
   crearHabitacion(){
 
-     this.listadoHabitaciones.push({
-       id: this.habitacionForm.value.id,
-       nombre: this.habitacionForm.value.nombre,
-       estado: 'libre',
-       srcImg: 'assets/camaDoble3.png',
-       mostrarCamas: false,
-       camas: []
-     });
-    
-    //this.habitacionForm.reset();    
+    if( this.habitacionForm.invalid ){
+
+      console.log('Completar datos de la habitación.');
+      return;
+    }
+
+    const dato: Habitacion = {
+      id: this.habitacionForm.value.id,
+      nombre: this.habitacionForm.value.nombre,
+      srcImg: 'assets/camaDoble3.png',
+      mostrarCamas: false
+    }
+
+    this.db.crearHabitacion(dato);
+
+    this.habitacionForm.reset();
+       
     this.display = false;
 
     
   }
 
-  verCamas(index: number){
+  verCamas(habitacion_id: string){
 
-    this.listadoHabitaciones[index].mostrarCamas = true;    
+    // Nos aseguramos que este arreglo siempre este limpio
+    // antes de agregarle camas
+    this.mostrarCamas = [];
+
+    for(let i = 0; i < this.listadoCamasMatrimoniales.length; i++){
+      if( this.listadoCamasMatrimoniales[i].id == habitacion_id ){
+        this.mostrarCamas.push(this.listadoCamasMatrimoniales[i]);
+      } else {
+        this.mensaje = 'No hay camas creadas.';
+      }
+    }
+
+    for(let i = 0; i < this.listadoHabitaciones.length; i++){
+      if( this.listadoHabitaciones[i].id == habitacion_id ){
+        this.listadoHabitaciones[i].mostrarCamas = true;
+      } else {
+        this.listadoHabitaciones[i].mostrarCamas = false;
+      }
+    }  
 
   }
 
-  crearCamas(index: number){
-       
+  crearCamas(habitacion_id: string){
 
-     this.listadoHabitaciones[index].camas.push({
-       estado: 'Sin ocupar',
-       cliente: 'Sin asignar',
-       fIngreso: new Date(),
-       fPartida: new Date()
-     });
+    this.mostrarCamas = []
+    this.mensaje = 'Haga click en ver camas otra vez por favor.'
 
-    // console.log(this.listadoHabitaciones[index].camas);
-
-    
+    this.db.crearCamas(habitacion_id);    
 
   }
 

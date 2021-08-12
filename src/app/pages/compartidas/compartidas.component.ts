@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Habitacion } from '../../interfaces/habitacion.interface';
+import { Camas, Habitacion } from '../../interfaces/habitacion.interface';
 
 @Component({
   selector: 'app-compartidas',
@@ -18,11 +18,12 @@ export class CompartidasComponent implements OnInit {
   display: boolean = false;
 
   habitacionForm: FormGroup = this.fb.group({
-    id: ['HCA1', Validators.required ],
-    nombre: ['Habitación Compartida A1', Validators.required ]
+    id: ['', Validators.required ],
+    nombre: ['', Validators.required ]
   });
 
   listadoHabitaciones: Habitacion[] = [];
+  listadoCamasCompartidas: Camas[] = [];
 
   constructor( private fb: FormBuilder ) { }
 
@@ -37,33 +38,21 @@ export class CompartidasComponent implements OnInit {
 
   crearHabitacion(){
 
-    this.listadoHabitaciones.push({
-      id: this.habitacionForm.value.id,
-      nombre: this.habitacionForm.value.nombre,
-      estado: 'libre',
-      srcImg: 'assets/camaDoble3.png',
-      mostrarCamas: false,
-      camas: []
-    });
+    console.log('Crear habitación');
 
     this.display = false;
 
-    console.log(this.listadoHabitaciones);
+    
 
   }
 
-  verCamas(i: number){
+  verCamas(){
     console.log('Mostrar camas');
-    this.listadoHabitaciones[i].mostrarCamas = true;
+    
   }
-  crearCamas(i: number){
+  crearCamas(){
     console.log('Crear camas');
-    this.listadoHabitaciones[i].camas.push({
-      estado: 'Sin ocupar',
-      cliente: 'Sin asignar',
-      fIngreso: new Date(),
-      fPartida: new Date()
-    });
+    
   }
 
 }
