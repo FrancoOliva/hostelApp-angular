@@ -41,7 +41,7 @@
                             <div class="flex align-items-center justify-content-center" style="min-width: 200px;"
                                 *ngFor="let cama of habitacion.camas; let i = index">
                                     <p-accordion class="mr-2 mb-2">
-                                        <p-accordionTab [header]="'Cama ' + (i)">
+                                        <p-accordionTab [header]="'Cama ' + (i+1)">
                                             {{ cama | json }}
                                         </p-accordionTab>
                                     </p-accordion>
@@ -63,6 +63,13 @@
     <form [formGroup]="habitacionForm" (ngSubmit)="crearHabitacion()">
 
         <div class="grid">
+
+            <div class="col-12 md:col-12 p-inputgroup">
+                <p>
+                    Es muy importante que el <strong>ID</strong> tenga relación con el nombre de la habitación. 
+                    Ej: 'HCA1 o hca1' para 'Habitación Compartida A1', etc.
+                </p>
+            </div>
 
             <div class="col-12 md:col-12 p-inputgroup">
                 <input type="text" pInputText placeholder="ID" formControlName="id">

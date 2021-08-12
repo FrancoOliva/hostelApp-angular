@@ -8,7 +8,13 @@ import { FirebaseService } from '../../servicios/firebase.service';
 @Component({
   selector: 'app-matrimoniales',
   templateUrl: './matrimoniales.component.html',
-  styles: [   ]
+  styles: [
+    `
+    p-accordion {
+      width: 450px;
+    }
+    `
+  ]
 })
 export class MatrimonialesComponent implements OnInit {
 
@@ -20,17 +26,19 @@ export class MatrimonialesComponent implements OnInit {
   });
 
   listadoHabitaciones: Habitacion[] =  [];
-  listadoCamasMatrimoniales: Camas[] = [];
+  
 
   mensaje: string = 'No existe ninguna habitación creada.';
 
   constructor( private fb: FormBuilder, private db: FirebaseService ) {
+
+    
     
    }
 
   ngOnInit(): void {
 
-    console.log(this.listadoCamasMatrimoniales.length);
+    
     
   }
 
@@ -42,19 +50,19 @@ export class MatrimonialesComponent implements OnInit {
 
   crearHabitacion(){
 
-    this.listadoHabitaciones.push({
-      id: this.habitacionForm.value.id,
-      nombre: this.habitacionForm.value.nombre,
-      estado: 'libre',
-      srcImg: 'assets/camaDoble3.png',
-      mostrarCamas: false,
-      camas: []
-    });
+     this.listadoHabitaciones.push({
+       id: this.habitacionForm.value.id,
+       nombre: this.habitacionForm.value.nombre,
+       estado: 'libre',
+       srcImg: 'assets/camaDoble3.png',
+       mostrarCamas: false,
+       camas: []
+     });
     
     //this.habitacionForm.reset();    
     this.display = false;
 
-    console.log(this.listadoHabitaciones.length);
+    
   }
 
   verCamas(index: number){
@@ -66,14 +74,16 @@ export class MatrimonialesComponent implements OnInit {
   crearCamas(index: number){
        
 
-    this.listadoHabitaciones[index].camas.push({
-      estado: 'Sin ocupar',
-      cliente: 'Sin asignar',
-      fIngreso: new Date(),
-      fPartida: new Date()
-    });
+     this.listadoHabitaciones[index].camas.push({
+       estado: 'Sin ocupar',
+       cliente: 'Sin asignar',
+       fIngreso: new Date(),
+       fPartida: new Date()
+     });
 
-    console.log(this.listadoHabitaciones[index].camas);
+    // console.log(this.listadoHabitaciones[index].camas);
+
+    
 
   }
 

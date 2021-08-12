@@ -22,17 +22,23 @@ export class LoginComponent implements OnInit {
 
   iniciarSesion(){
 
-    console.log(this.loginBasico);
-
+    
+    
     if( this.loginBasico.invalid ){
-      this.loginBasico.markAllAsTouched();
+
       console.log('Se apretó iniciar sesión sin completar email y contraseña');
+      this.loginBasico.markAllAsTouched();
+
       return;
+
     }
 
-    // Servicio 
+    // Servicio
+    console.log('Iniciando...');
     this.auth.login(this.loginBasico.value.email,this.loginBasico.value.password);
     this.loginBasico.reset();
+
+    
 
   }
 

@@ -9,7 +9,7 @@ import { CompartidasComponent } from './compartidas/compartidas.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'menu',
     component: HomeComponent,
     children: [
       {
@@ -34,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: ''
+        redirectTo: 'menu'
       }
     ]
   }
