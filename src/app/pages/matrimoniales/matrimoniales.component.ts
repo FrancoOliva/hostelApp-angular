@@ -30,10 +30,7 @@ export class MatrimonialesComponent implements OnInit {
 
   mensaje: string = 'No hay camas creadas.';
 
-  mostrarCamas: Camas[] = [];
-  
-
-  
+  mostrarCamas: Camas[] = [];  
 
   constructor( private fb: FormBuilder, private db: FirebaseService ) {
 
@@ -43,7 +40,7 @@ export class MatrimonialesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.db.obtenerHabitaciones().subscribe((querySnapshot) => {
+    this.db.obtenerHabitaciones('matrimoniales').subscribe((querySnapshot) => {
 
       // Limpiamos el arreglo para evitar errores
       // cuando creamos una habitación nueva
@@ -57,7 +54,7 @@ export class MatrimonialesComponent implements OnInit {
       
     });
 
-    this.db.obtenerCamas().subscribe((querySnapshot) =>{
+    this.db.obtenerCamas('matrimoniales').subscribe((querySnapshot) =>{
 
       this.listadoCamasMatrimoniales = [];
 
@@ -93,7 +90,7 @@ export class MatrimonialesComponent implements OnInit {
       mostrarCamas: false
     }
 
-    this.db.crearHabitacion(dato);
+    this.db.crearHabitacion('matrimoniales', dato);
 
     this.habitacionForm.reset();
        
@@ -131,7 +128,7 @@ export class MatrimonialesComponent implements OnInit {
     this.mostrarCamas = []
     this.mensaje = 'Haga click en ver camas otra vez por favor.'
 
-    this.db.crearCamas(habitacion_id);    
+    this.db.crearCamas('matrimoniales',habitacion_id);    
 
   }
 

@@ -135,42 +135,77 @@ export class FirebaseService {
 
   /** PENDIENTE VER BIEN CLOUDFIRESTORE */
   
-  crearHabitacion(dato:Habitacion){
+  crearHabitacion(tipo: string, dato:Habitacion){
 
-    this.cloudFirestore.collection('habitaciones_matrimoniales').doc(dato.id).set(dato).then(()=>{
-      // console.log('Habitación creada con éxito.');
-    }).catch((error)=>{
-      console.log(error.code);
-      console.log(error.message);
-    })
+    if(tipo == 'matrimoniales'){
+      this.cloudFirestore.collection('habitaciones_matrimoniales').doc(dato.id).set(dato).then(()=>{
+        // console.log('Habitación creada con éxito.');
+      }).catch((error)=>{
+        console.log(error.code);
+        console.log(error.message);
+      });
+    } else {
+      this.cloudFirestore.collection('habitaciones_compartidas').doc(dato.id).set(dato).then(()=>{
+        // console.log('Habitación creada con éxito.');
+      }).catch((error)=>{
+        console.log(error.code);
+        console.log(error.message);
+      })
+    }
   }
 
-  obtenerHabitaciones(): Observable<Habitacion[]>{
+  obtenerHabitaciones(tipo:string): Observable<Habitacion[]>{
 
-     return this.cloudFirestore.collection<Habitacion>('habitaciones_matrimoniales').valueChanges();
+     if(tipo == 'matrimoniales'){
+      return this.cloudFirestore.collection<Habitacion>('habitaciones_matrimoniales').valueChanges();
+     } else {
+      return this.cloudFirestore.collection<Habitacion>('habitaciones_compartidas').valueChanges();
+     }
     
   }
 
-  crearCamas(id_habitacion:string){
+  crearCamas(tipo:string, id_habitacion:string){
 
-    this.cloudFirestore.collection('camas_matrimoniales').add({
-      id      : id_habitacion, 
-      estado  : 'Sin ocupar',
-      cliente : 'Sin asignar',
-      fIngreso: new Date(),
-      fPartida: new Date(),
-    }).then((doc) => {
-      // console.log('Cama creada con éxito.');
-      
-    }).catch((error) =>{
-      console.log(error.code);
-      console.log(error.message);
-    });
+    if(tipo == 'matrimoniales'){
+      this.cloudFirestore.collection('camas_matrimoniales').add({
+        id      : id_habitacion, 
+        estado  : 'Sin ocupar',
+        cliente : 'Sin asignar',
+        fIngreso: new Date(),
+        fPartida: new Date(),
+      }).then((doc) => {
+        // console.log('Cama creada con éxito.');
+        
+      }).catch((error) =>{
+        console.log(error.code);
+        console.log(error.message);
+      });
+
+    } else {
+      this.cloudFirestore.collection('camas_compartidas').add({
+        id      : id_habitacion, 
+        estado  : 'Sin ocupar',
+        cliente : 'Sin asignar',
+        fIngreso: new Date(),
+        fPartida: new Date(),
+      }).then((doc) => {
+        // console.log('Cama creada con éxito.');
+        
+      }).catch((error) =>{
+        console.log(error.code);
+        console.log(error.message);
+      });
+    }
 
   }
 
-  obtenerCamas():Observable<Camas[]>{
-    return this.cloudFirestore.collection<Camas>('camas_matrimoniales').valueChanges();
+  obtenerCamas(tipo:string):Observable<Camas[]>{
+    
+    if(tipo == 'matrimoniales'){
+      return this.cloudFirestore.collection<Camas>('camas_matrimoniales').valueChanges();
+    } else {
+      return this.cloudFirestore.collection<Camas>('camas_compartidas').valueChanges();
+    }
   }
 
   
