@@ -58,7 +58,7 @@ export class FirebaseService {
 
   }
 
-  crearUsuarioAuth(email: string, password: any){
+  crearUsuarioAuth(email: string, password: string){
 
     this.authentication.createUserWithEmailAndPassword(email, password).then((user)=>{
       console.log('Usuario registrado', user);
@@ -66,6 +66,15 @@ export class FirebaseService {
       console.log(error.code);
       console.log(error.message);
     });
+  }
+
+  recuperarContraseña(email: string){
+    this.authentication.sendPasswordResetEmail(email).then(() => {
+      console.log('Recuperación de contraseña. Ver email.');
+    }).catch((e) => {
+      console.log(e.code);
+      console.log(e.message);
+    })
   }
 
 

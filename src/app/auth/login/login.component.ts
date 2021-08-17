@@ -7,8 +7,9 @@ import { FirebaseService } from '../../servicios/firebase.service';
   templateUrl: './login.component.html',
   styles: [
     `
-    span {
+    span:hover {
       cursor: pointer;
+      color: #FFF47D;
     }
     `
   ]
@@ -27,7 +28,13 @@ export class LoginComponent implements OnInit {
     password2: ['', [ Validators.required, Validators.minLength(8) ] ]
   });
 
-  display: boolean = false;
+  restClave: FormGroup = this.fb.group({
+    email: ['', [ Validators.required, Validators.email ] ]
+  })
+
+  display1: boolean = false;
+
+  display2: boolean = false;
 
   constructor( private fb: FormBuilder, private auth: FirebaseService ) { }
 
@@ -65,28 +72,42 @@ export class LoginComponent implements OnInit {
     }
 
     if( this.nuevoUsuario.value.password1 == this.nuevoUsuario.value.password2 ){
-      console.log('Contraseñas verificadas.');
+      // console.log('Contraseñas verificadas.');
 
       this.auth.crearUsuarioAuth(this.nuevoUsuario.value.email, this.nuevoUsuario.value.password2);
       this.nuevoUsuario.reset();
-      this.display = false;
+      this.display1 = false;
 
     } else {
       console.log('Las contraseñas no coinciden.');
     }
     
-    console.log();
+
   }
 
   recuperarClave(){
 
-    console.log('Recuperar Clave');
+    if( this.restClave.invalid ){
+
+      return;
+
+    } else {
+      console.log('Recuperando contraseña...');
+      this.auth.recuperarContraseña(this.restClave.value.email);
+    }
+
+    this.display2 = false;
 
   }
 
-  mostrarDialog(){
+  mostrarDialog1(){
 
-    this.display = true;
+    this.display1 = true;
+  }
+
+  mostrarDialog2(){
+
+    this.display2 = true;
   }
 
 }

@@ -31,13 +31,13 @@
                         </div>
                         <!--Recuperar Contraseña-->
                         <div class="col-12 flex align-items-center justify-content-center">
-                            <span (click)="recuperarClave()">
+                            <span (click)="mostrarDialog2()">
                                 Recuperar Contraseña
                             </span>
                         </div>
                         <!--Mensaje: Usuario inexistente-->
                         <div class="col-12 flex align-items-center justify-content-center">
-                            <span (click)="mostrarDialog()">
+                            <span (click)="mostrarDialog1()">
                                 Crear Usuario
                             </span>
                         </div>
@@ -55,11 +55,15 @@
 
 
 <!--Dialog Usuario-->
-<p-dialog header="Creando Usuario" [(visible)]="display" [style]="{width: '25vw'}" [baseZIndex]="10000">
+<p-dialog header="Creando Usuario" [(visible)]="display1" [style]="{width: '25vw'}" [baseZIndex]="10000">
 
     <form [formGroup]="nuevoUsuario" (ngSubmit)="crearUsuario()" autocomplete="off">
 
         <div class="grid">
+
+            <div class="col-12 md:col-12 p-inputgroup">
+                <span>Muchas gracias por querer probar mi aplicación.</span>
+            </div>
 
 
             <div class="col-12 md:col-12 p-inputgroup">
@@ -84,3 +88,28 @@
 </p-dialog>
 
 <!--Dialog Recuperar Clave-->
+<p-dialog header="Recuperando Clave" [(visible)]="display2" [style]="{width: '25vw'}" [baseZIndex]="10000">
+
+    <form [formGroup]="restClave" (ngSubmit)="recuperarClave()" autocomplete="off">
+
+        <div class="grid">
+
+
+            <div class="col-12 md:col-12 p-inputgroup">
+                <span>Una vez ingresado el email y de dar click en recuperar, verifica tu correo.</span>
+            </div>
+
+            <div class="col-12 md:col-12 p-inputgroup">
+                <input type="text" pInputText placeholder="Ingresar email" formControlName="email">
+            </div>
+
+            
+
+            <div class="col-12 md:col-12 p-inputgroup justify-content-end">
+                <button pButton pRipple type="submit" label="Recuperar" class="p-button-success"></button>
+            </div>
+        </div>        
+
+    </form>
+
+</p-dialog>
