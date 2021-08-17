@@ -58,6 +58,16 @@ export class FirebaseService {
 
   }
 
+  crearUsuarioAuth(email: string, password: any){
+
+    this.authentication.createUserWithEmailAndPassword(email, password).then((user)=>{
+      console.log('Usuario registrado', user);
+    }).catch((error) => {
+      console.log(error.code);
+      console.log(error.message);
+    });
+  }
+
 
   /** CLOUD FIRESTORE */
   guardarCliente(cliente: FormGroup){
@@ -132,8 +142,6 @@ export class FirebaseService {
       console.log(errorMessage);
     })
   }
-
-  /** PENDIENTE VER BIEN CLOUDFIRESTORE */
   
   crearHabitacion(tipo: string, dato:Habitacion){
 

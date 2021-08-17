@@ -29,12 +29,19 @@
                         <div class="col-12 flex align-items-center justify-content-center">
                             <input type="password" pInputText placeholder="Contraseña" formControlName="password">
                         </div>
-                        <!--Mensaje: Usuario inexistente-->
+                        <!--Recuperar Contraseña-->
                         <div class="col-12 flex align-items-center justify-content-center">
-                            <span class="p-error" *ngIf="false">
-                                Contraseña incorrecta.
+                            <span (click)="recuperarClave()">
+                                Recuperar Contraseña
                             </span>
                         </div>
+                        <!--Mensaje: Usuario inexistente-->
+                        <div class="col-12 flex align-items-center justify-content-center">
+                            <span (click)="mostrarDialog()">
+                                Crear Usuario
+                            </span>
+                        </div>
+                        
                         <!-- Iniciar sesión -->                        
                         <div class="col-12 flex align-items-center justify-content-center">
                             <button pButton pRipple type="submit" label="Iniciar sesión"></button>
@@ -47,3 +54,33 @@
 </div>
 
 
+<!--Dialog Usuario-->
+<p-dialog header="Creando Usuario" [(visible)]="display" [style]="{width: '25vw'}" [baseZIndex]="10000">
+
+    <form [formGroup]="nuevoUsuario" (ngSubmit)="crearUsuario()" autocomplete="off">
+
+        <div class="grid">
+
+
+            <div class="col-12 md:col-12 p-inputgroup">
+                <input type="text" pInputText placeholder="Ingresar correo" formControlName="email">
+            </div>
+
+            <div class="col-12 md:col-12 p-inputgroup">
+                <input type="password" pInputText placeholder="Ingresar password" formControlName="password1">
+            </div>
+
+            <div class="col-12 md:col-12 p-inputgroup">
+                <input type="password" pInputText placeholder="Confirmar password" formControlName="password2">
+            </div>
+
+            <div class="col-12 md:col-12 p-inputgroup justify-content-end">
+                <button pButton pRipple type="submit" label="Crear" class="p-button-success"></button>
+            </div>
+        </div>        
+
+    </form>
+
+</p-dialog>
+
+<!--Dialog Recuperar Clave-->
