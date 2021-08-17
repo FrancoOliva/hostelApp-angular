@@ -58,6 +58,25 @@ export class FirebaseService {
 
   }
 
+  crearUsuarioAuth(email: string, password: string){
+
+    this.authentication.createUserWithEmailAndPassword(email, password).then((user)=>{
+      console.log('Usuario registrado', user);
+    }).catch((error) => {
+      console.log(error.code);
+      console.log(error.message);
+    });
+  }
+
+  recuperarContraseña(email: string){
+    this.authentication.sendPasswordResetEmail(email).then(() => {
+      console.log('Recuperación de contraseña. Ver email.');
+    }).catch((e) => {
+      console.log(e.code);
+      console.log(e.message);
+    })
+  }
+
 
   /** CLOUD FIRESTORE */
   guardarCliente(cliente: FormGroup){
@@ -132,8 +151,6 @@ export class FirebaseService {
       console.log(errorMessage);
     })
   }
-
-  /** PENDIENTE VER BIEN CLOUDFIRESTORE */
   
   crearHabitacion(tipo: string, dato:Habitacion){
 
