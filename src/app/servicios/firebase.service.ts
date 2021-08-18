@@ -9,16 +9,13 @@ import { Gastos } from '../interfaces/gastos.interface';
 import { Camas, Habitacion } from '../interfaces/habitacion.interface';
 
 import { Observable } from 'rxjs';
-import * as firebase from 'firebase';
+
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class FirebaseService {
-
-  usuarioConectado: any;
-  loginError: string = "";
+export class FirebaseService {  
   
 
   constructor( private authentication: AngularFireAuth, private router: Router, private cloudFirestore: AngularFirestore ) { }
@@ -28,53 +25,17 @@ export class FirebaseService {
 
   login(email:string, password: string){
 
-    this.authentication.signInWithEmailAndPassword(email, password).then((user) =>{
-
-      // console.log('USUARIO AUTENTICADO CORRECTAMENTE');
-      // console.log(user);
-
-      this.usuarioConectado = user;
-
-      this.router.navigate(['./hostel-app/menu']);
-
-      
-    }).catch((error) =>{
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-      if( errorCode == 'auth/wrong-password'){
-        this.loginError = 'Auth: Contraseña incorrecta.'
-        console.log(this.loginError);
-      } else if( errorCode == 'auth/user-not-found'){
-        this.loginError = 'Auth: El usuario no existe.'
-        console.log(this.loginError);
-      } else {
-        console.log(errorCode);
-        console.log(errorMessage);
-        this.loginError = errorMessage;
-      }  
-
-    });
+    return this.authentication.signInWithEmailAndPassword(email, password);
 
   }
 
   crearUsuarioAuth(email: string, password: string){
 
-    this.authentication.createUserWithEmailAndPassword(email, password).then((user)=>{
-      console.log('Usuario registrado', user);
-    }).catch((error) => {
-      console.log(error.code);
-      console.log(error.message);
-    });
+    return this.authentication.createUserWithEmailAndPassword(email, password);
   }
 
   recuperarContraseña(email: string){
-    this.authentication.sendPasswordResetEmail(email).then(() => {
-      console.log('Recuperación de contraseña. Ver email.');
-    }).catch((e) => {
-      console.log(e.code);
-      console.log(e.message);
-    })
+    return this.authentication.sendPasswordResetEmail(email);
   }
 
 
