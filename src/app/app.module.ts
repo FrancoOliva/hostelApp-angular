@@ -19,6 +19,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
+import { MessageService } from 'primeng/api';
 
 
 
@@ -48,7 +49,8 @@ import { environment } from 'src/environments/environment';
   ],
   providers: [
     AngularFireAuth,
-    AngularFirestore
+    AngularFirestore,
+    MessageService
 
   ],
   bootstrap: [AppComponent]
