@@ -1,9 +1,10 @@
+<p-toast ></p-toast>
 <div class="flex justify-content-center">
     <h1>Registrar Clientes</h1>
 </div>
 
 
-<form autocomplete="off" [formGroup]="registroCliente" (ngSubmit)="guardar()">
+<form autocomplete="off" [formGroup]="registroCliente" (ngSubmit)="registrarCliente()">
     
     <div class="grid justify-content-center"> <!-- GRID - CONTENEDOR CENTRADO -->
 
@@ -32,7 +33,15 @@
                     <div class="col-12 md:col-6">                        
                         <div class="p-grid p-fluid">
                             <div class="p-col-12 p-md-6">
-                                <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2030" inputId="navigators" [showIcon]="true" formControlName="fNacimiento" dateFormat="dd/mm/yy"></p-calendar> 
+                                <p-calendar 
+                                [monthNavigator]="true" 
+                                [yearNavigator]="true" 
+                                yearRange="1900:2030" 
+                                inputId="navigators" 
+                                [showIcon]="true" 
+                                formControlName="fNacimiento" 
+                                dateFormat="dd/mm/yy"
+                                placeholder="Fecha de nacimiento"></p-calendar> 
                             </div>
                         </div>
                     </div>
@@ -83,7 +92,7 @@
 
                     <!--BOTÓN GUARDAR CLIENTE-->
                     <div class="col-12 md:col-12 flex justify-content-end">
-                        <button pButton type="submit" label="Guardar" class="p-button-success mt-4"></button>
+                        <button pButton type="submit" label="Registrar" class="p-button-success mt-4"></button>
                     </div>
                 </div>    
             </p-card>

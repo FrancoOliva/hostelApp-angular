@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Pais } from 'src/app/interfaces/pais.interface';
 
 import { FirebaseService } from '../../servicios/firebase.service';
@@ -32,7 +33,7 @@ export class RegistrarClienteComponent implements OnInit {
     email: ['', Validators.required ]
   });
 
-  constructor( private fb: FormBuilder, private db: FirebaseService, private paises: PaisesService ) {
+  constructor( private fb: FormBuilder, private db: FirebaseService, private paises: PaisesService, private messageService: MessageService ) {
 
     this.genero = [
       {
@@ -55,24 +56,28 @@ export class RegistrarClienteComponent implements OnInit {
     
   }
 
-  guardar(){ 
+  registrarCliente(){    
     
     
-    
-    if( this.registroCliente.invalid){
+    if( this.registroCliente.invalid ){
 
-      console.log('Se intento crear un cliente sin completar el formulario');
-      console.log(this.registroCliente.status);
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'No se puede registrar el cliente, falta información.'});
+      this.registroCliente.markAllAsTouched();
+      
       return;
 
     } else {
-      
-      console.log('Formulario completo');
-      this.registroCliente.status
-
-      // mandamos el formulario a la DB
-      this.db.guardarCliente(this.registroCliente);
+            
+      this.db.guardarCliente(this.registroCliente).then( (docRef) =>{
+        
+        this.messageService.add({severity:'success', summary: 'Datos OK', detail: 'Cliente registrado y guardado en la base de datos.'});
+        
+      }).catch((error) => {
+        this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+      });
     }
+
+    this.registroCliente.reset();
     
     
   }

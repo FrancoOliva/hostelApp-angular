@@ -59,10 +59,7 @@ export class FirebaseService {
     // console.log('Guardar en DB', data);
 
     // Guardar cliente en CloudFirestore
-    this.cloudFirestore.collection("clientes").doc(data.dniPasaporte).set(data).then( (docRef) =>{
-      console.log('Datos guardados correctamente');
-      
-    });
+    return this.cloudFirestore.collection("clientes").doc(data.dniPasaporte).set(data);
 
     
   }
