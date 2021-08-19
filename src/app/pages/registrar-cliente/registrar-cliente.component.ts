@@ -30,7 +30,7 @@ export class RegistrarClienteComponent implements OnInit {
     fIngreso: ['', Validators.required ],
     fPartida: ['', Validators.required ],
     genero: ['', Validators.required ],
-    email: ['', Validators.required ]
+    email: ['', [Validators.required, Validators.email] ]
   });
 
   constructor( private fb: FormBuilder, private db: FirebaseService, private paises: PaisesService, private messageService: MessageService ) {

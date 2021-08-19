@@ -56,8 +56,6 @@ export class FirebaseService {
       flag        : cliente.value.pais[0].flag
     };
 
-    // console.log('Guardar en DB', data);
-
     // Guardar cliente en CloudFirestore
     return this.cloudFirestore.collection("clientes").doc(data.dniPasaporte).set(data);
 
@@ -77,15 +75,7 @@ export class FirebaseService {
 
 
     // Guardar pago en CloudFirestore
-    this.cloudFirestore.collection('pagos').add(data).then((docRef) => {
-      console.log('Pago guardado correctamente en la base de datos.');
-    }).catch((error) =>{
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-      console.log(errorCode);
-      console.log(errorMessage);
-    })
+    return this.cloudFirestore.collection('pagos').add(data);
   }
 
   guardarGasto(gastos: FormGroup){

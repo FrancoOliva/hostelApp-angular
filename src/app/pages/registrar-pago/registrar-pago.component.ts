@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { FirebaseService } from '../../servicios/firebase.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class RegistrarPagoComponent implements OnInit {
     fPago: ['', Validators.required ]
   });
 
-  constructor( private fb: FormBuilder, private db: FirebaseService ) {
+  constructor( private fb: FormBuilder, private db: FirebaseService, private messageService: MessageService ) {
     this.fPago = [
       {
         label: 'Efectivo', value: 'Efectivo'
@@ -35,17 +36,29 @@ export class RegistrarPagoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  guardar(){
+  regPago(){
 
     if(this.registrarPago.invalid){
-      console.log('El formulario es invalido. Verificar campos incompletos.');
+      
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'No se pudo registrar el pago. Verificar información.'});
+      this.registrarPago.markAllAsTouched();
       return;
-    }
+    } else {
 
-    // Pasamos el formulario completado como parámetro
-    this.db.guardarPago(this.registrarPago);
+      // Pasamos el formulario completado como parámetro
+    this.db.guardarPago(this.registrarPago).then((docRef) => {
+
+      this.messageService.add({severity:'success', summary: 'Datos Ok', detail: 'Pago registrado y guardado con éxito.'});
+
+    }).catch((error) =>{
+
+      this.messageService.add({severity:'error', summary: error.code, detail: error.message });
+    });
+
+    }    
 
     this.registrarPago.reset();
+    
   }
 
 

@@ -1,4 +1,5 @@
 
+<p-toast ></p-toast>
 <div class="flex justify-content-center">
     <h1>Registrar Pagos</h1>
 </div>
@@ -6,7 +7,7 @@
 <form 
 autocomplete="off"
 [formGroup]="registrarPago"
-(ngSubmit)="guardar()">
+(ngSubmit)="regPago()">
     
     <div class="grid justify-content-center"> <!-- GRID - CONTENEDOR CENTRADO -->
 
@@ -89,7 +90,7 @@ autocomplete="off"
 
                         <!--BOTÓN GUARDAR CLIENTE-->
                         <div class="col-12 col flex justify-content-end">
-                            <button pButton type="submit" label="Guardar" class="p-button-success mt-4"></button>
+                            <button pButton type="submit" label="Registrar" class="p-button-success mt-4"></button>
                         </div>
 
                     </div>
