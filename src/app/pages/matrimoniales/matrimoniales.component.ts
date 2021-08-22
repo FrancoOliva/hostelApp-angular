@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Habitacion } from 'src/app/interfaces/habitacion.interface';
 import { Camas } from '../../interfaces/habitacion.interface';
 
@@ -32,7 +33,7 @@ export class MatrimonialesComponent implements OnInit {
 
   mostrarCamas: Camas[] = [];  
 
-  constructor( private fb: FormBuilder, private db: FirebaseService ) {
+  constructor( private fb: FormBuilder, private db: FirebaseService, private messageService: MessageService ) {
 
     
     
@@ -51,12 +52,14 @@ export class MatrimonialesComponent implements OnInit {
         this.listadoHabitaciones.push(doc);
 
       })
+
+      
       
     });
 
     this.db.obtenerCamas('matrimoniales').subscribe((querySnapshot) =>{
 
-      this.listadoCamasMatrimoniales = [];
+      // this.listadoCamasMatrimoniales = [];
 
       querySnapshot.forEach((doc) => {
         
@@ -77,25 +80,61 @@ export class MatrimonialesComponent implements OnInit {
 
   crearHabitacion(){
 
-    if( this.habitacionForm.invalid ){
-
-      console.log('Completar datos de la habitación.');
-      return;
-    }
+    let existe: boolean = false;
 
     const dato: Habitacion = {
       id: this.habitacionForm.value.id,
       nombre: this.habitacionForm.value.nombre,
       srcImg: 'assets/camaDoble3.png',
       mostrarCamas: false
+    }    
+
+    // Si el formulario es inválido no realizamos ninguna acción
+    if( this.habitacionForm.invalid ){
+
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'No se puede crear la habitación. Verificar información.'});
+      this.habitacionForm.markAllAsTouched();
+      return;
     }
 
-    this.db.crearHabitacion('matrimoniales', dato);
 
-    this.habitacionForm.reset();
-       
-    this.display = false;
+    for( let i = 0; i < this.listadoHabitaciones.length; i++){
 
+      // Si el ID ingresado coincide con el ID de alguna de las habitaciones
+      // modificamos el valor de 'existe'
+      if(this.listadoHabitaciones[i].id == dato.id ){       
+
+        existe = true;
+
+      }
+
+    }
+    
+    // Si el ID existe muestra alerta y no crea nada en la base de datos
+    // caso contrario, crea la habitación y la guarda en firebase
+    if( existe == true ){
+      
+       this.messageService.add({severity:'error', summary: 'Error', detail: 'Ya existe una habitación con ese ID.'});
+
+    } else if( existe == false ){
+
+      this.db.crearHabitacion( 'matrimoniales', dato ).then(() => {
+
+        this.messageService.add({severity:'success', summary: 'Datos OK', detail: 'Habitación creada con éxito y guardada en la base de datos.'});
+
+      }).catch((error) => {
+
+        // alerta con el código de error y mensaje predefinido
+        this.messageService.add({severity:'error', summary: error.code, detail: error.message });
+      })
+
+      this.habitacionForm.reset();
+     
+      this.display = false;   
+      
+    }
+
+    
     
   }
 

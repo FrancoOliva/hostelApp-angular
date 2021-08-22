@@ -95,19 +95,13 @@ export class FirebaseService {
   crearHabitacion(tipo: string, dato:Habitacion){
 
     if(tipo == 'matrimoniales'){
-      this.cloudFirestore.collection('habitaciones_matrimoniales').doc(dato.id).set(dato).then(()=>{
-        // console.log('Habitación creada con éxito.');
-      }).catch((error)=>{
-        console.log(error.code);
-        console.log(error.message);
-      });
+      
+      return this.cloudFirestore.collection('habitaciones_matrimoniales').doc(dato.id).set(dato);
+
     } else {
-      this.cloudFirestore.collection('habitaciones_compartidas').doc(dato.id).set(dato).then(()=>{
-        // console.log('Habitación creada con éxito.');
-      }).catch((error)=>{
-        console.log(error.code);
-        console.log(error.message);
-      })
+      
+      return this.cloudFirestore.collection('habitaciones_compartidas').doc(dato.id).set(dato);
+
     }
   }
 
@@ -163,6 +157,12 @@ export class FirebaseService {
     } else {
       return this.cloudFirestore.collection<Camas>('camas_compartidas').valueChanges();
     }
+  }
+
+  verficiarID(id_hab: string){
+
+    return this.cloudFirestore.collection('habitaciones_matrimoniales').doc(id_hab).get();
+
   }
 
   
