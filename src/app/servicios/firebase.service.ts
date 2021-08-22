@@ -89,15 +89,7 @@ export class FirebaseService {
 
 
     // Guardar pago en CloudFirestore
-    this.cloudFirestore.collection('gastos').add(data).then((docRef) => {
-      console.log('Gasto guardado correctamente en la base de datos.');
-    }).catch((error) =>{
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-      console.log(errorCode);
-      console.log(errorMessage);
-    })
+    return this.cloudFirestore.collection('gastos').add(data);
   }
   
   crearHabitacion(tipo: string, dato:Habitacion){
