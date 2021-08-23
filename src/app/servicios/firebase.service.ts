@@ -118,33 +118,21 @@ export class FirebaseService {
   crearCamas(tipo:string, id_habitacion:string){
 
     if(tipo == 'matrimoniales'){
-      this.cloudFirestore.collection('camas_matrimoniales').add({
+      return this.cloudFirestore.collection('camas_matrimoniales').add({
         id      : id_habitacion, 
-        estado  : 'Sin ocupar',
-        cliente : 'Sin asignar',
-        fIngreso: new Date(),
-        fPartida: new Date(),
-      }).then((doc) => {
-        // console.log('Cama creada con éxito.');
-        
-      }).catch((error) =>{
-        console.log(error.code);
-        console.log(error.message);
+        estado  : 'Libre',
+        cliente : '-',
+        fIngreso: '-',
+        fPartida: '-',
       });
 
     } else {
-      this.cloudFirestore.collection('camas_compartidas').add({
+      return this.cloudFirestore.collection('camas_compartidas').add({
         id      : id_habitacion, 
-        estado  : 'Sin ocupar',
-        cliente : 'Sin asignar',
-        fIngreso: new Date(),
-        fPartida: new Date(),
-      }).then((doc) => {
-        // console.log('Cama creada con éxito.');
-        
-      }).catch((error) =>{
-        console.log(error.code);
-        console.log(error.message);
+        estado  : 'Libre',
+        cliente : '-',
+        fIngreso: '-',
+        fPartida: '-',
       });
     }
 

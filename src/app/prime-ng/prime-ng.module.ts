@@ -13,6 +13,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { AccordionModule } from 'primeng/accordion';
 import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
 
 
 
@@ -33,7 +34,8 @@ import { ToastModule } from 'primeng/toast';
     MultiSelectModule,
     SelectButtonModule,
     AccordionModule,
-    ToastModule
+    ToastModule,
+    TableModule
   ]
 })
 export class PrimeNgModule { }

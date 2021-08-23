@@ -44,11 +44,11 @@
                                 *ngFor="let cama of mostrarCamas; let i = index"
                                 >
                                 
-                                <p-accordion class="m-2">
-                                    <p-accordionTab [header]="'Cama ' + (i+1)">
-                                        {{ cama | json }}
-                                    </p-accordionTab>
-                                </p-accordion>
+                                <p-card class="m-4" [style]="{width: '100px'}">
+                                    <div class="centrar-texto">
+                                        {{ 'Cama ' + (i+1)}}
+                                    </div>
+                                </p-card>
                                 
                                     
                             </div>

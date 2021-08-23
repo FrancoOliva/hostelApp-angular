@@ -11,6 +11,9 @@ import { FirebaseService } from '../../servicios/firebase.service';
     `
     p-accordion {
       width: 450px;
+    },
+    .centrar-texto{
+      text-align: center;
     }
     `
   ]
@@ -158,10 +161,35 @@ export class CompartidasComponent implements OnInit {
 
   crearCamas(habitacion_id: string){
     
-    this.mostrarCamas = []
+    this.mostrarCamas = [];
     this.mensaje = 'Haga click en ver camas otra vez por favor.'
 
-    this.db.crearCamas('compartidas', habitacion_id);
+    for( let i = 0; i < this.listadoCamasCompartidas.length; i++){
+
+      if(this.listadoCamasCompartidas[i].id = habitacion_id){
+
+        this.mostrarCamas.push(this.listadoCamasCompartidas[i]);
+
+      }
+
+    }
+
+    if( this.mostrarCamas.length < 18 ){
+      
+      
+      this.db.crearCamas('compartidas', habitacion_id).then((doc) => {
+        
+        this.messageService.add({severity:'success', summary: 'Cama creada', detail: 'Cama creada y registrada en la base de datos.'});
+        
+      }).catch((error) =>{
+        
+        this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+
+      });
+
+    } else {
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Máximo de camas alcanzado.'});
+    }
     
   }
 
