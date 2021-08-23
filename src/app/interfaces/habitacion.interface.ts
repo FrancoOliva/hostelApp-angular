@@ -10,6 +10,6 @@ export interface Camas{
     id?: string;
     estado: string;
     cliente: string;
-    fIngreso: Date;
-    fPartida: Date;
+    fIngreso: string;
+    fPartida: string;
 }

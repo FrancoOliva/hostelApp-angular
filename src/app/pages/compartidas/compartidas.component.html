@@ -44,12 +44,13 @@
                                 *ngFor="let cama of mostrarCamas; let i = index"
                                 >
                                 
-                                <p-card class="m-4" [style]="{width: '100px'}">
+                                <p-card class="m-4 click" [style]="{width: '100px'}" (click)="infoCama(i)">
                                     <div class="centrar-texto">
-                                        {{ 'Cama ' + (i+1)}}
+                                        <strong>
+                                            {{ 'Cama ' + (i+1)}}
+                                        </strong>
                                     </div>
-                                </p-card>
-                                
+                                </p-card>                                
                                     
                             </div>
                         </div>
@@ -92,4 +93,10 @@
 
     </form>
 
+</p-dialog>
+
+
+<!-- DIALOG - Cama seleccionada información -->
+<p-dialog header="Cama" [(visible)]="display1" [style]="{width: '50vw'}" [baseZIndex]="10000">
+    MOSTRAR INFORMACIÓN DE LA CAMA SELECCIONADA
 </p-dialog>

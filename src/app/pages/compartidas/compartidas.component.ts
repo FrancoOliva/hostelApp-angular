@@ -9,8 +9,8 @@ import { FirebaseService } from '../../servicios/firebase.service';
   templateUrl: './compartidas.component.html',
   styles: [
     `
-    p-accordion {
-      width: 450px;
+    .click{
+      cursor: pointer;
     },
     .centrar-texto{
       text-align: center;
@@ -21,6 +21,10 @@ import { FirebaseService } from '../../servicios/firebase.service';
 export class CompartidasComponent implements OnInit {
 
   display: boolean = false;
+
+  display1: boolean = false;
+
+  camaInfo!: any[];
 
   habitacionForm: FormGroup = this.fb.group({
     id: ['', Validators.required ],
@@ -162,7 +166,6 @@ export class CompartidasComponent implements OnInit {
   crearCamas(habitacion_id: string){
     
     this.mostrarCamas = [];
-    this.mensaje = 'Haga click en ver camas otra vez por favor.'
 
     for( let i = 0; i < this.listadoCamasCompartidas.length; i++){
 
@@ -175,6 +178,9 @@ export class CompartidasComponent implements OnInit {
     }
 
     if( this.mostrarCamas.length < 18 ){
+
+      this.mostrarCamas = [];
+      this.mensaje = 'Haga click en ver camas otra vez por favor.'
       
       
       this.db.crearCamas('compartidas', habitacion_id).then((doc) => {
@@ -190,6 +196,13 @@ export class CompartidasComponent implements OnInit {
     } else {
       this.messageService.add({severity:'error', summary: 'Error', detail: 'Máximo de camas alcanzado.'});
     }
+    
+  }
+
+  infoCama(index_cama: number){
+    this.display1 = true;
+
+    console.log('Información cama ', index_cama);
     
   }
 
