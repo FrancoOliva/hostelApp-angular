@@ -1,3 +1,4 @@
+import { LowerCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -39,7 +40,7 @@ export class MatrimonialesComponent implements OnInit {
     
    }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
 
     this.db.obtenerHabitaciones('matrimoniales').subscribe((querySnapshot) => {
 
@@ -81,6 +82,7 @@ export class MatrimonialesComponent implements OnInit {
   crearHabitacion(){
 
     let existe: boolean = false;
+ 
 
     const dato: Habitacion = {
       id: this.habitacionForm.value.id,

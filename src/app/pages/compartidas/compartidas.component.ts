@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Camas, Habitacion } from '../../interfaces/habitacion.interface';
 import { FirebaseService } from '../../servicios/firebase.service';
 
@@ -30,7 +31,7 @@ export class CompartidasComponent implements OnInit {
 
   mostrarCamas: Camas[] = [];
 
-  constructor( private fb: FormBuilder, private db: FirebaseService ) { }
+  constructor( private fb: FormBuilder, private db: FirebaseService, private messageService: MessageService ) { }
 
   ngOnInit(): void {
 
@@ -71,9 +72,12 @@ export class CompartidasComponent implements OnInit {
 
   crearHabitacion(){
 
+    let existe: boolean = false;
+
     if( this.habitacionForm.invalid ){
 
-      console.log('Completar datos de la habitación.');
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Verificar información. No se pudo crear la habitación.'});
+      this.habitacionForm.markAllAsTouched();
       return;
     }
 
@@ -84,11 +88,41 @@ export class CompartidasComponent implements OnInit {
       mostrarCamas: false
     }
 
-    this.db.crearHabitacion('compartidas', dato);
+    for( let i = 0; i < this.listadoHabitaciones.length; i++){
 
-    this.habitacionForm.reset();
+      // Si el ID ingresado coincide con el ID de alguna de las habitaciones
+      // modificamos el valor de 'existe'
+      if(this.listadoHabitaciones[i].id == dato.id ){       
 
-    this.display = false;
+        existe = true;
+
+      }
+
+    }
+    
+    // Si el ID existe muestra alerta y no crea nada en la base de datos
+    // caso contrario, crea la habitación y la guarda en firebase
+    if( existe == true ){
+      
+       this.messageService.add({severity:'error', summary: 'Error', detail: 'Ya existe una habitación con ese ID.'});
+
+    } else if( existe == false ){
+
+      this.db.crearHabitacion( 'compartidas', dato ).then(() => {
+
+        this.messageService.add({severity:'success', summary: 'Datos OK', detail: 'Habitación creada con éxito y guardada en la base de datos.'});
+
+      }).catch((error) => {
+
+        // alerta con el código de error y mensaje predefinido
+        this.messageService.add({severity:'error', summary: error.code, detail: error.message });
+      })
+
+      this.habitacionForm.reset();
+     
+      this.display = false;   
+      
+    }
 
     
 
@@ -121,6 +155,7 @@ export class CompartidasComponent implements OnInit {
     }  
     
   }
+
   crearCamas(habitacion_id: string){
     
     this.mostrarCamas = []
