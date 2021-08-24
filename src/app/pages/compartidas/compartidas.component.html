@@ -97,6 +97,34 @@
 
 
 <!-- DIALOG - Cama seleccionada información -->
-<p-dialog header="Cama" [(visible)]="display1" [style]="{width: '50vw'}" [baseZIndex]="10000">
-    MOSTRAR INFORMACIÓN DE LA CAMA SELECCIONADA
+<p-dialog header="Cama" [(visible)]="display1" [style]="{width: '35vw'}" [baseZIndex]="10000">
+    
+    <h5>Información de la cama</h5>
+
+    <form [formGroup]="camaForm">
+        <div class="grid">
+
+            <div class="md:col-12">
+                <input type="text" pInputText placeholder="ID Habitación" formControlName="id_hab">
+            </div>
+            <div class="md:col-6">
+                <input type="text" pInputText placeholder="Estado" formControlName="estado">
+            </div>
+            <div class="md:col-6">
+                <input type="text" pInputText placeholder="Cliente" formControlName="cliente">
+            </div>
+            <div class="md:col-6">
+                <input type="text" pInputText placeholder="Fecha de ingreso" formControlName="fIngreso">
+            </div>
+            <div class="md:col-6">
+                <input type="text" pInputText placeholder="Fecha de partida" formControlName="fPartida">
+            </div>
+            
+            <div class="col-12 md:col-12">
+                <button pButton pRipple label="Ocupar" class="p-button-success mr-2 mt-1" (click)="ocupar()"></button>
+                <button pButton pRipple label="Desocupar" class="p-button-success mr-2 mt-1" (click)="desocupar()"></button>
+            </div>
+        </div> 
+    </form>    
+
 </p-dialog>

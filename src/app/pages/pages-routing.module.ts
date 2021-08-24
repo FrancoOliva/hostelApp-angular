@@ -6,6 +6,7 @@ import { RegistrarPagoComponent } from './registrar-pago/registrar-pago.componen
 import { RegistrarGastoComponent } from './registrar-gasto/registrar-gasto.component';
 import { MatrimonialesComponent } from './matrimoniales/matrimoniales.component';
 import { CompartidasComponent } from './compartidas/compartidas.component';
+import { ReportesDiariosComponent } from './reportes-diarios/reportes-diarios.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'compartidas',
         component: CompartidasComponent
+      },
+      {
+        path: 'reportes-diarios',
+        component: ReportesDiariosComponent
       },
       {
         path: '**',

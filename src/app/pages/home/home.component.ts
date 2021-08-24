@@ -51,7 +51,8 @@ export class HomeComponent implements OnInit {
         label: 'Reportes',
         items: [
           {
-            label: 'Por día'
+            label: 'Por día',
+            routerLink: 'reportes-diarios'
           }
         ]
       }

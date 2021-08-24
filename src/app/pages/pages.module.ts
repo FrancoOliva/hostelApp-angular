@@ -10,6 +10,7 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatrimonialesComponent } from './matrimoniales/matrimoniales.component';
 import { CompartidasComponent } from './compartidas/compartidas.component';
+import { ReportesDiariosComponent } from './reportes-diarios/reportes-diarios.component';
 
 
 
@@ -22,6 +23,7 @@ import { CompartidasComponent } from './compartidas/compartidas.component';
     RegistrarPagoComponent,
     MatrimonialesComponent,
     CompartidasComponent,
+    ReportesDiariosComponent,
     
     
   ],

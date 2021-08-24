@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Camas, Habitacion } from '../../interfaces/habitacion.interface';
 import { FirebaseService } from '../../servicios/firebase.service';
@@ -24,11 +24,18 @@ export class CompartidasComponent implements OnInit {
 
   display1: boolean = false;
 
-  camaInfo!: any[];
 
   habitacionForm: FormGroup = this.fb.group({
     id: ['', Validators.required ],
     nombre: ['', Validators.required ]
+  });
+
+  camaForm: FormGroup = this.fb.group({
+    id_hab: new FormControl({ value: '', disabled: true}),
+    estado: new FormControl({ value: '', disabled: true}),
+    cliente: new FormControl({ value: '', disabled: true}),
+    fIngreso: new FormControl({ value: '', disabled: true}),
+    fPartida: new FormControl({ value: '', disabled: true})
   });
 
   listadoHabitaciones: Habitacion[] = [];
@@ -65,6 +72,7 @@ export class CompartidasComponent implements OnInit {
         this.listadoCamasCompartidas.push(doc);
 
       });
+
       
     });
 
@@ -204,6 +212,15 @@ export class CompartidasComponent implements OnInit {
 
     console.log('Información cama ', index_cama);
     
+  }
+
+  ocupar(){
+
+    console.log('Desplegar lista de clientes registrados para ocupar la cama');
+  }
+
+  desocupar(){
+    console.log('Liberar cama');
   }
 
 }
