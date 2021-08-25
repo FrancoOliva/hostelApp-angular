@@ -52,9 +52,7 @@ export class MatrimonialesComponent implements OnInit {
         
         this.listadoHabitaciones.push(doc);
 
-      })
-
-      
+      })      
       
     });
 
@@ -64,7 +62,19 @@ export class MatrimonialesComponent implements OnInit {
 
       querySnapshot.forEach((doc) => {
         
-        this.listadoCamasMatrimoniales.push(doc);
+        let data : any = {
+          id_doc: doc.id,
+          info: doc.data()
+        }
+        
+        this.listadoCamasMatrimoniales.push({
+          id_doc: doc.id,
+          id: data.info.id,
+          estado: data.info.estado,
+          cliente: data.info.cliente,
+          fIngreso: data.info.fIngreso,
+          fPartida: data.info.fPartida
+        });        
 
       });
       

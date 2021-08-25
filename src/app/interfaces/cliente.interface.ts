@@ -2,11 +2,11 @@ export interface DatosCliente {
     nombre: string;
     apellido: string;
     edad: number;
-    fNacimiento: Date;
+    fNacimiento: string;
     dniPasaporte: string;
     pais: string;
-    fIngreso: Date;
-    fPartida: Date;
+    fIngreso: string;
+    fPartida: string;
     genero: string;
     email: string;
   

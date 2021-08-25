@@ -4,6 +4,13 @@ import { MessageService } from 'primeng/api';
 import { Camas, Habitacion } from '../../interfaces/habitacion.interface';
 import { FirebaseService } from '../../servicios/firebase.service';
 
+interface ListadoCliente {
+  cliente: string,
+  nacionalidad: string,
+  fIngreso: string
+  fPartida: string
+}
+
 @Component({
   selector: 'app-compartidas',
   templateUrl: './compartidas.component.html',
@@ -23,6 +30,10 @@ export class CompartidasComponent implements OnInit {
   display: boolean = false;
 
   display1: boolean = false;
+
+  display2: boolean = false;
+
+  clientes: ListadoCliente[] = [];
 
 
   habitacionForm: FormGroup = this.fb.group({
@@ -67,13 +78,25 @@ export class CompartidasComponent implements OnInit {
 
       this.listadoCamasCompartidas = [];
 
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach((doc) => {        
+
+        let data : any = {
+          id_doc: doc.id,
+          info: doc.data()
+        }
         
-        this.listadoCamasCompartidas.push(doc);
+        this.listadoCamasCompartidas.push({
+          id_doc: doc.id,
+          id: data.info.id,
+          estado: data.info.estado,
+          cliente: data.info.cliente,
+          fIngreso: data.info.fIngreso,
+          fPartida: data.info.fPartida
+        });        
 
       });
 
-      
+      //console.log(this.listadoCamasCompartidas);
     });
 
 
@@ -208,19 +231,50 @@ export class CompartidasComponent implements OnInit {
   }
 
   infoCama(index_cama: number){
+
     this.display1 = true;
 
-    console.log('Información cama ', index_cama);
+    console.log(this.listadoCamasCompartidas[index_cama]);
     
   }
+
+  // PARA ACTUALIZAR LA INFO DE LA CAMA EN LA BASE DE DATOS
+  // NECESITAMOS TENER SU ID
 
   ocupar(){
 
     console.log('Desplegar lista de clientes registrados para ocupar la cama');
+    this.display2 = true;
+
+    this.db.obtenerClientes().subscribe((querySnapshot) => {
+
+      this.clientes = [];
+
+      querySnapshot.forEach((doc) => {
+
+        let data : any = doc.data();
+
+        this.clientes.push(
+          {
+            cliente: data.nombre + ' ' + data.apellido,
+            nacionalidad: data.pais,
+            fIngreso: data.fIngreso,
+            fPartida: data.fPartida
+          }
+        );
+
+      });
+
+    });
   }
 
   desocupar(){
     console.log('Liberar cama');
+  }
+
+  seleccionarCliente(){
+    console.log('Seleccionar cliente y actualizar datos de la cama.');
+    this.display2 = false;
   }
 
 }

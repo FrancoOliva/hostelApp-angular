@@ -7,6 +7,7 @@ export interface Habitacion {
 }
 
 export interface Camas{
+    id_doc?: string;
     id?: string;
     estado: string;
     cliente: string;

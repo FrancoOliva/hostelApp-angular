@@ -41,22 +41,24 @@ export class FirebaseService {
 
   /** CLOUD FIRESTORE */
   guardarCliente(cliente: FormGroup){
+
+    
     
     let data: DatosCliente = {
       nombre      : cliente.value.nombre,
       apellido    : cliente.value.apellido,
       edad        : cliente.value.edad, 
-      fNacimiento : cliente.value.fNacimiento,
+      fNacimiento : (cliente.value.fNacimiento).getTime(),
       dniPasaporte: cliente.value.dniPasaporte,
       pais        : cliente.value.pais[0].name,
-      fIngreso    : cliente.value.fIngreso,
-      fPartida    : cliente.value.fPartida,
+      fIngreso    : (cliente.value.fIngreso).getTime(),
+      fPartida    : (cliente.value.fPartida).getTime(),
       genero      : cliente.value.genero,
       email       : cliente.value.email,
       flag        : cliente.value.pais[0].flag
     };
 
-    // Guardar cliente en CloudFirestore
+    
     return this.cloudFirestore.collection("clientes").doc(data.dniPasaporte).set(data);
 
     
@@ -138,18 +140,24 @@ export class FirebaseService {
 
   }
 
-  obtenerCamas(tipo:string):Observable<Camas[]>{
+  obtenerCamas(tipo:string){
     
     if(tipo == 'matrimoniales'){
-      return this.cloudFirestore.collection<Camas>('camas_matrimoniales').valueChanges();
+      return this.cloudFirestore.collection('camas_matrimoniales').get();
     } else {
-      return this.cloudFirestore.collection<Camas>('camas_compartidas').valueChanges();
+      return this.cloudFirestore.collection('camas_compartidas').get();
     }
   }
 
   verficiarID(id_hab: string){
 
     return this.cloudFirestore.collection('habitaciones_matrimoniales').doc(id_hab).get();
+
+  }
+
+  obtenerClientes(){
+
+    return this.cloudFirestore.collection('clientes').get();
 
   }
 
