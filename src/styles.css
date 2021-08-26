@@ -24,6 +24,19 @@ img.flag {
     height: auto;
 }
 
-
-/* --green-500:#4caf50;
-  --pink-500:#e91e63; */
+/* table bootstrap */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-accent-bg: transparent;
+    --bs-table-striped-color: #212529;
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+    --bs-table-active-color: #212529;
+    --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+    --bs-table-hover-color: #212529;
+    --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #f8f9fa;
+    vertical-align: top;
+    border-color: #dee2e6;
+}

@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { Camas, Habitacion } from '../../interfaces/habitacion.interface';
 import { FirebaseService } from '../../servicios/firebase.service';
 
-interface ListadoCliente {
+export interface ListadoCliente {
   cliente: string,
   nacionalidad: string,
   fIngreso: string
@@ -41,13 +41,8 @@ export class CompartidasComponent implements OnInit {
     nombre: ['', Validators.required ]
   });
 
-  camaForm: FormGroup = this.fb.group({
-    id_hab: new FormControl({ value: '', disabled: true}),
-    estado: new FormControl({ value: '', disabled: true}),
-    cliente: new FormControl({ value: '', disabled: true}),
-    fIngreso: new FormControl({ value: '', disabled: true}),
-    fPartida: new FormControl({ value: '', disabled: true})
-  });
+  id_cama_doc: any = '';
+  id_hab: string = ''; 
 
   listadoHabitaciones: Habitacion[] = [];
   listadoCamasCompartidas: Camas[] = [];
@@ -55,6 +50,7 @@ export class CompartidasComponent implements OnInit {
   mensaje: string = 'No hay camas creadas.';
 
   mostrarCamas: Camas[] = [];
+  camaSeleccionada: Camas[] = [];
 
   constructor( private fb: FormBuilder, private db: FirebaseService, private messageService: MessageService ) { }
 
@@ -94,9 +90,8 @@ export class CompartidasComponent implements OnInit {
           fPartida: data.info.fPartida
         });        
 
-      });
-
-      //console.log(this.listadoCamasCompartidas);
+      });      
+      
     });
 
 
@@ -190,7 +185,9 @@ export class CompartidasComponent implements OnInit {
       } else {
         this.listadoHabitaciones[i].mostrarCamas = false;
       }
-    }  
+    }
+
+    
     
   }
 
@@ -217,6 +214,30 @@ export class CompartidasComponent implements OnInit {
       this.db.crearCamas('compartidas', habitacion_id).then((doc) => {
         
         this.messageService.add({severity:'success', summary: 'Cama creada', detail: 'Cama creada y registrada en la base de datos.'});
+
+        this.db.obtenerCamas('compartidas').subscribe((querySnapshot) =>{
+
+          this.listadoCamasCompartidas = [];
+    
+          querySnapshot.forEach((doc) => {        
+    
+            let data : any = {
+              id_doc: doc.id,
+              info: doc.data()
+            }
+            
+            this.listadoCamasCompartidas.push({
+              id_doc: doc.id,
+              id: data.info.id,
+              estado: data.info.estado,
+              cliente: data.info.cliente,
+              fIngreso: data.info.fIngreso,
+              fPartida: data.info.fPartida
+            });        
+    
+          });      
+          
+        });
         
       }).catch((error) =>{
         
@@ -232,18 +253,18 @@ export class CompartidasComponent implements OnInit {
 
   infoCama(index_cama: number){
 
-    this.display1 = true;
+    this.camaSeleccionada = [];
 
-    console.log(this.listadoCamasCompartidas[index_cama]);
+    this.id_cama_doc = this.mostrarCamas[index_cama].id_doc;
+
+    this.camaSeleccionada.push(this.mostrarCamas[index_cama]);    
+
+    this.display1 = true;
     
   }
 
-  // PARA ACTUALIZAR LA INFO DE LA CAMA EN LA BASE DE DATOS
-  // NECESITAMOS TENER SU ID
-
   ocupar(){
 
-    console.log('Desplegar lista de clientes registrados para ocupar la cama');
     this.display2 = true;
 
     this.db.obtenerClientes().subscribe((querySnapshot) => {
@@ -266,15 +287,36 @@ export class CompartidasComponent implements OnInit {
       });
 
     });
+
+    
   }
 
   desocupar(){
     console.log('Liberar cama');
   }
 
-  seleccionarCliente(){
-    console.log('Seleccionar cliente y actualizar datos de la cama.');
+  // BUSCAR UNA FORMA DE CAPTURAR LOS DATOS DEL CLIENTE PARA ACTUALIZAR LA CAMA EN LA BASE DE DATOS
+
+  seleccionarCliente(index:number){
+
+    let id: string = this.id_cama_doc;
+    let cliente: ListadoCliente = this.clientes[index];
+    
+    // actualizar cama en firebase
+    this.db.actualizarInfoCama(id, cliente).then((doc) => {
+      
+      console.log('Cama actualizada');
+
+    }).catch((error) => {
+      console.log(error.code);
+      console.log(error.message);
+    });   
+     
+
     this.display2 = false;
+    this.id_cama_doc = '';
   }
+
+  
 
 }

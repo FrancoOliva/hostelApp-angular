@@ -9,6 +9,7 @@ import { Gastos } from '../interfaces/gastos.interface';
 import { Camas, Habitacion } from '../interfaces/habitacion.interface';
 
 import { Observable } from 'rxjs';
+import { ListadoCliente } from '../pages/compartidas/compartidas.component';
 
 
 
@@ -119,22 +120,24 @@ export class FirebaseService {
 
   crearCamas(tipo:string, id_habitacion:string){
 
+    let date = (new Date()).getTime();
+
     if(tipo == 'matrimoniales'){
       return this.cloudFirestore.collection('camas_matrimoniales').add({
         id      : id_habitacion, 
-        estado  : 'Libre',
-        cliente : '-',
-        fIngreso: '-',
-        fPartida: '-',
+        estado  : 'LIBRE',
+        cliente : 'SIN ASIGNAR',
+        fIngreso: date,
+        fPartida: date,
       });
 
     } else {
       return this.cloudFirestore.collection('camas_compartidas').add({
         id      : id_habitacion, 
-        estado  : 'Libre',
-        cliente : '-',
-        fIngreso: '-',
-        fPartida: '-',
+        estado  : 'LIBRE',
+        cliente : 'SIN ASIGNAR',
+        fIngreso: date,
+        fPartida: date,
       });
     }
 
@@ -160,6 +163,19 @@ export class FirebaseService {
     return this.cloudFirestore.collection('clientes').get();
 
   }
+
+  actualizarInfoCama(id: string, cliente: ListadoCliente){
+
+    console.log(id, ' => ', cliente);
+
+    return this.cloudFirestore.collection('camas_compartidas').doc(id).update({
+      estado: 'OCUPADA',
+      cliente: cliente.cliente,
+      fIngreso: cliente.fIngreso,
+      fPartida: cliente.fPartida
+    });
+  }
+
 
   
 
