@@ -295,7 +295,8 @@ export class CompartidasComponent implements OnInit {
     console.log('Liberar cama');
   }
 
-  // BUSCAR UNA FORMA DE CAPTURAR LOS DATOS DEL CLIENTE PARA ACTUALIZAR LA CAMA EN LA BASE DE DATOS
+  // BUSCAR UNA FORMA DE ACTUALIZAR EL HTML CUANDO SE ACTUALIZA LOS DATOS DE LA CAMA EN LA DB
+  // CON LOS DATOS DEL CLIENTE
 
   seleccionarCliente(index:number){
 
