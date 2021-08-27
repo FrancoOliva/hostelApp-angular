@@ -97,72 +97,73 @@
 
 
 <!-- DIALOG - Cama seleccionada información -->
-<p-dialog header="Cama" [(visible)]="display1" [style]="{width: '35vw'}" [baseZIndex]="10000">
-    
-    <h5>Información de la cama</h5>
+<p-dialog header="Información de la cama" [(visible)]="display1" [style]="{width: '45vw'}" [baseZIndex]="10000">
 
-    <div>
-        <table class="table" *ngFor="let info of camaSeleccionada; let i = index;">
-            <thead>
-              <tr>
-                <th scope="col">ID HAB</th>
-                <th scope="col">ESTADO</th>
-                <th scope="col">CLIENTE</th>
-                <th scope="col">INGRESO</th>
-                <th scope="col">PARTIDA</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <!-- <th scope="row"> {{ (i+1) }} </th> -->
-                <td> {{info.id}} </td>
-                <td> {{info.estado}} </td>
-                <td> {{info.cliente}} </td>
-                <td> {{info.fIngreso | date:'dd/MM/yyyy'}} </td>
-                <td> {{info.fPartida | date:'dd/MM/yyyy'}} </td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="card">
+        <p-table [value]="camaSeleccionada" responsiveLayout="scroll">
+            <!-- <ng-template pTemplate="caption">
+                Información de la cama
+            </ng-template> -->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>ESTADO</th>
+                    <th>CLIENTE</th>
+                    <th>INGRESO</th>
+                    <th>PARTIDA</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-camaSeleccionada>
+                <tr>
+                    <td>{{camaSeleccionada.id}}</td>
+                    <td>{{camaSeleccionada.estado}}</td>
+                    <td>{{camaSeleccionada.cliente}}</td>
+                    <td>{{camaSeleccionada.fIngreso | date:'yy/MM/yyyy'}}</td>
+                    <td>{{camaSeleccionada.fPartida | date:'yy/MM/yyyy'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 
-    <button pButton pRipple label="Ocupar" class="p-button-success mr-2 mt-1" (click)="ocupar()"></button>
-    <button pButton pRipple label="Desocupar" class="p-button-success mr-2 mt-1" (click)="desocupar()"></button>
+    <div class="mt-2">
+        <button pButton pRipple label="Ocupar" class="p-button-success mr-2 mt-1" (click)="ocupar()"></button>
+        <button pButton pRipple label="Desocupar" class="p-button-success mr-2 mt-1" (click)="desocupar()"></button>
+    </div>
 
 </p-dialog>
 
+
+<!-- INFO CLIENTES REGISTRADOS -->
 <p-dialog header="Clientes que fueron registrados" [(visible)]="display2" [style]="{width: '50vw'}" [baseZIndex]="10000">
 
-    <div>
-        <table class="table" *ngFor="let cliente of clientes; let i = index;">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">CLIENTE</th>
-                <th scope="col">NACIONALIDAD</th>
-                <th scope="col">INGRESO</th>
-                <th scope="col">PARTIDA</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row"> {{ (i+1) }} </th>
-                <td> {{ cliente.cliente }} </td>
-                <td> {{cliente.nacionalidad}} </td>
-                <td> {{cliente.fIngreso | date:'yy/MM/yyyy'}} </td>
-                <td> {{cliente.fPartida | date:'yy/MM/yyyy'}} </td>
-                <td>
-                    <button 
-                    pButton 
-                    pRipple 
-                    type="button" 
-                    icon="pi pi-check" 
-                    class="p-button-rounded p-button-success p-button-text" 
-                    (click)="seleccionarCliente(i)"></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    
+
+    <div class="card">
+        <p-table [value]="clientes" responsiveLayout="scroll">
+            <!-- <ng-template pTemplate="caption">
+                Información de la cama
+            </ng-template> -->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>CLIENTE</th>
+                    <th>NACIONALIDAD</th>
+                    <th>INGRESO</th>
+                    <th>PARTIDA</th>
+                    <th style="width:4rem"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-clientes>
+                <tr>
+                    <td>{{clientes.cliente}}</td>
+                    <td>{{clientes.nacionalidad}}</td>
+                    <td>{{clientes.fIngreso | date:'yy/MM/yyyy'}}</td>
+                    <td>{{clientes.fPartida | date:'yy/MM/yyyy'}}</td>
+                    <td>
+                        <button type="button" pButton pRipple icon="pi pi-search" (click)="seleccionarCliente(clientes)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 
     

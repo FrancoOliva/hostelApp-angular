@@ -166,7 +166,7 @@ export class FirebaseService {
 
   actualizarInfoCama(id: string, cliente: ListadoCliente){
 
-    console.log(id, ' => ', cliente);
+    // console.log(id, ' => ', cliente);
 
     return this.cloudFirestore.collection('camas_compartidas').doc(id).update({
       estado: 'OCUPADA',
@@ -175,6 +175,8 @@ export class FirebaseService {
       fPartida: cliente.fPartida
     });
   }
+
+  
 
 
   
