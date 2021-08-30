@@ -179,6 +179,7 @@ export class FirebaseService {
   desocuparCama(id_cama: string, tipo_camas: string){
 
     let date = (new Date()).getTime();
+    console.log(date);
 
     return this.cloudFirestore.collection(tipo_camas).doc(id_cama).update({
       estado: 'LIBRE',

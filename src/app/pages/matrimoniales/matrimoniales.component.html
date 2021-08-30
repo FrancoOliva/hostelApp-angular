@@ -39,54 +39,18 @@
                         </div>
                         <!-- Camas creadas-->
                         <div class="flex flex-row flex-wrap" >
-                            <div class="flex align-items-center justify-content-center" style="min-width: 200px;"
+                            <div class="flex align-items-center justify-content-center" style="min-width: 100px;"
                                 *ngFor="let cama of mostrarCamas; let i = index">
-                                    <p-accordion class="mr-2 mb-2">
-                                        <p-accordionTab [header]="'Cama ' + (i+1)">
-                                            {{ cama | json }}
+                                    
+                                <p-card class="m-2 click" [style]="{width: '100px'}" (click)="infoCama(i)">
+                                    <div class="centrar-texto">
+                                        <strong>
+                                            {{ 'Cama ' + (i+1)}}
+                                        </strong>
+                                    </div>
+                                </p-card>
 
-                                            <!-- <div class="grid"> 
-                                                <div class="col-12 md:col-6">
-                                                    <div class="p-inputgroup">
-                                                        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                                                        <input type="text" pInputText placeholder="Estado: libre" >         
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 md:col-6">
-                                                    <div class="p-inputgroup">
-                                                        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                                                        <input type="text" pInputText placeholder="Cliente: sin asignar">         
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 md:col-6">                        
-                                                    <div class="p-grid p-fluid">
-                                                        <div class="p-col-12 p-md-6">
-                                                            <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2021:2050" [showIcon]="true" dateFormat="dd/mm/yy" placeholder="Fecha de ingreso"></p-calendar> 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 md:col-6">                        
-                                                    <div class="p-grid p-fluid">
-                                                        <div class="p-col-12 p-md-6">
-                                                            <p-calendar [monthNavigator]="true" [yearNavigator]="true" yearRange="2021:2050" [showIcon]="true" dateFormat="dd/mm/yy" placeholder="Fecha de partida"></p-calendar> 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 md:col flex justify-content-end">
-                                                    <div class="flex align-items-center justify-content-center">
-                                                        <button pButton pRipple type="button" label="Ocupar" class="p-button-success mr-2"></button>
-                                                    </div>
-                                                    <div class="flex align-items-center justify-content-center">
-                                                        <button pButton pRipple type="button" label="Liberar" class="p-button-success mr-2"></button>
-                                                    </div>
-                                                    
-                                                    
-                                                </div>
-                                           </div> -->
-
-                                        </p-accordionTab>
-                                    </p-accordion>
-                                </div>
+                            </div>
                         </div>
                     </p-card>
                     
@@ -127,4 +91,76 @@
 
     </form>
 
+</p-dialog>
+
+<!-- DIALOG - Cama seleccionada información -->
+<p-dialog header="Información de la cama" [(visible)]="display1" [style]="{width: '45vw'}" [baseZIndex]="10000">
+
+    <div class="card">
+        <p-table [value]="camaSeleccionada" responsiveLayout="scroll">
+            <!-- <ng-template pTemplate="caption">
+                Información de la cama
+            </ng-template> -->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>ESTADO</th>
+                    <th>CLIENTE</th>
+                    <th>INGRESO</th>
+                    <th>PARTIDA</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-camaSeleccionada>
+                <tr>
+                    <td>{{camaSeleccionada.id}}</td>
+                    <td>{{camaSeleccionada.estado}}</td>
+                    <td>{{camaSeleccionada.cliente}}</td>
+                    <td>{{camaSeleccionada.fIngreso | date:'dd/MM/yyyy'}}</td>
+                    <td>{{camaSeleccionada.fPartida | date:'dd/MM/yyyy'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="mt-2">
+        <button pButton pRipple label="Ocupar" class="p-button-success mr-2 mt-1" (click)="ocupar()"></button>
+        <button pButton pRipple label="Desocupar" class="p-button-success mr-2 mt-1" (click)="desocupar()"></button>
+    </div>
+
+</p-dialog>
+
+<!-- INFO CLIENTES REGISTRADOS -->
+<p-dialog header="Clientes que fueron registrados" [(visible)]="display2" [style]="{width: '50vw'}" [baseZIndex]="10000">
+
+    
+
+    <div class="card">
+        <p-table [value]="clientes" responsiveLayout="scroll">
+            <!-- <ng-template pTemplate="caption">
+                Información de la cama
+            </ng-template> -->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>CLIENTE</th>
+                    <th>NACIONALIDAD</th>
+                    <th>INGRESO</th>
+                    <th>PARTIDA</th>
+                    <th style="width:4rem"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-clientes>
+                <tr>
+                    <td>{{clientes.cliente}}</td>
+                    <td>{{clientes.nacionalidad}}</td>
+                    <td>{{clientes.fIngreso | date:'dd/MM/yyyy'}}</td>
+                    <td>{{clientes.fPartida | date:'dd/MM/yyyy'}}</td>
+                    <td>
+                        <button type="button" pButton pRipple icon="pi pi-search" (click)="seleccionarCliente(clientes)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    
 </p-dialog>

@@ -118,8 +118,8 @@
                     <td>{{camaSeleccionada.id}}</td>
                     <td>{{camaSeleccionada.estado}}</td>
                     <td>{{camaSeleccionada.cliente}}</td>
-                    <td>{{camaSeleccionada.fIngreso | date:'yy/MM/yyyy'}}</td>
-                    <td>{{camaSeleccionada.fPartida | date:'yy/MM/yyyy'}}</td>
+                    <td>{{camaSeleccionada.fIngreso | date:'dd/MM/yyyy'}}</td>
+                    <td>{{camaSeleccionada.fPartida | date:'dd/MM/yyyy'}}</td>
                 </tr>
             </ng-template>
         </p-table>
@@ -156,8 +156,8 @@
                 <tr>
                     <td>{{clientes.cliente}}</td>
                     <td>{{clientes.nacionalidad}}</td>
-                    <td>{{clientes.fIngreso | date:'yy/MM/yyyy'}}</td>
-                    <td>{{clientes.fPartida | date:'yy/MM/yyyy'}}</td>
+                    <td>{{clientes.fIngreso | date:'dd/MM/yyyy'}}</td>
+                    <td>{{clientes.fPartida | date:'dd/MM/yyyy'}}</td>
                     <td>
                         <button type="button" pButton pRipple icon="pi pi-search" (click)="seleccionarCliente(clientes)"></button>
                     </td>

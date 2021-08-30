@@ -6,14 +6,18 @@ import { Habitacion } from 'src/app/interfaces/habitacion.interface';
 import { Camas } from '../../interfaces/habitacion.interface';
 
 import { FirebaseService } from '../../servicios/firebase.service';
+import { ListadoCliente } from '../compartidas/compartidas.component';
 
 @Component({
   selector: 'app-matrimoniales',
   templateUrl: './matrimoniales.component.html',
   styles: [
     `
-    p-accordion {
-      width: 450px;
+    .click{
+      cursor: pointer;
+    },
+    .centrar-texto{
+      text-align: center;
     }
     `
   ]
@@ -21,6 +25,12 @@ import { FirebaseService } from '../../servicios/firebase.service';
 export class MatrimonialesComponent implements OnInit {
 
   display: boolean = false;
+
+  display1: boolean = false;
+
+  display2: boolean = false;
+
+  clientes: ListadoCliente[] = [];
 
   habitacionForm: FormGroup = this.fb.group({
     id: ['', Validators.required],
@@ -32,7 +42,10 @@ export class MatrimonialesComponent implements OnInit {
 
   mensaje: string = 'No hay camas creadas.';
 
-  mostrarCamas: Camas[] = [];  
+  mostrarCamas: Camas[] = [];
+  camaSeleccionada: Camas[] = [];
+
+  id_cama_doc: any = '';
 
   constructor( private fb: FormBuilder, private db: FirebaseService, private messageService: MessageService ) {
 
@@ -58,7 +71,7 @@ export class MatrimonialesComponent implements OnInit {
 
     this.db.obtenerCamas('matrimoniales').subscribe((querySnapshot) =>{
 
-      // this.listadoCamasMatrimoniales = [];
+      this.listadoCamasMatrimoniales = [];
 
       querySnapshot.forEach((doc) => {
         
@@ -144,9 +157,7 @@ export class MatrimonialesComponent implements OnInit {
      
       this.display = false;   
       
-    }
-
-    
+    }    
     
   }
 
@@ -176,11 +187,238 @@ export class MatrimonialesComponent implements OnInit {
 
   crearCamas(habitacion_id: string){
 
-    this.mostrarCamas = []
-    this.mensaje = 'Haga click en ver camas otra vez por favor.'
+    this.mostrarCamas = [];
 
-    this.db.crearCamas('matrimoniales',habitacion_id);    
+    for( let i = 0; i < this.listadoCamasMatrimoniales.length; i++){
 
+      if(this.listadoCamasMatrimoniales[i].id = habitacion_id){
+
+        this.mostrarCamas.push(this.listadoCamasMatrimoniales[i]);
+
+      }
+
+    }
+
+    if( this.mostrarCamas.length < 5 ){
+
+      this.mostrarCamas = [];
+      this.mensaje = 'Haga click en ver camas otra vez por favor.'
+      
+      
+      this.db.crearCamas('matrimoniales', habitacion_id).then((doc) => {
+        
+        this.messageService.add({severity:'success', summary: 'Cama creada', detail: 'Cama creada y registrada en la base de datos.'});
+
+        this.db.obtenerCamas('matrimoniales').subscribe((querySnapshot) =>{
+
+          this.listadoCamasMatrimoniales = [];
+    
+          querySnapshot.forEach((doc) => {        
+    
+            let data : any = {
+              id_doc: doc.id,
+              info: doc.data()
+            }
+            
+            this.listadoCamasMatrimoniales.push({
+              id_doc: doc.id,
+              id: data.info.id,
+              estado: data.info.estado,
+              cliente: data.info.cliente,
+              fIngreso: data.info.fIngreso,
+              fPartida: data.info.fPartida
+            });        
+    
+          });      
+          
+        });
+        
+      }).catch((error) =>{
+        
+        this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+
+      });
+
+    } else {
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'Máximo de camas alcanzado.'});
+    }  
+
+  }
+
+  infoCama(index_cama: number){
+
+    this.camaSeleccionada = [];
+
+    console.log(this.mostrarCamas[index_cama].id_doc);
+
+    this.id_cama_doc = this.mostrarCamas[index_cama].id_doc;
+
+    this.camaSeleccionada.push(this.mostrarCamas[index_cama]);    
+
+    this.display1 = true;
+    
+  }
+
+  ocupar(){
+    
+    this.display2 = true;
+
+    this.db.obtenerClientes().subscribe((querySnapshot) => {
+
+      this.clientes = [];
+
+      querySnapshot.forEach((doc) => {
+
+        let data : any = doc.data();
+
+        this.clientes.push(
+          {
+            cliente: data.nombre + ' ' + data.apellido,
+            nacionalidad: data.pais,
+            fIngreso: data.fIngreso,
+            fPartida: data.fPartida
+          }
+        );
+
+      });
+
+    });
+  }
+
+  desocupar(){
+
+    let date: string = (new Date()).getTime().toString();
+    console.log(date);
+
+    this.db.desocuparCama(this.id_cama_doc, 'camas_matrimoniales').then(() =>{
+      
+      this.messageService.add({severity:'success', summary: 'Datos OK', detail: 'Cama liberada y actualizada en la base de datos.'});
+
+      this.camaSeleccionada[0] = {
+        id : this.camaSeleccionada[0].id,
+        estado: 'LIBRE',
+        cliente: 'SIN ASIGNAR',
+        fIngreso: date,
+        fPartida: date
+      };
+
+      this.db.obtenerCamas('matrimoniales').subscribe((camas) =>{
+
+        this.listadoCamasMatrimoniales = [];
+      
+        camas.forEach((doc) => {        
+
+          let data : any = {
+            id_doc: doc.id,
+            info: doc.data()
+          }
+          
+          this.listadoCamasMatrimoniales.push({
+            id_doc: doc.id,
+            id: data.info.id,
+            estado: data.info.estado,
+            cliente: data.info.cliente,
+            fIngreso: data.info.fIngreso,
+            fPartida: data.info.fPartida
+          });          
+
+        });
+
+        
+        // Como recuperamos todas las camas de la db de nuevo
+        // vaciamos 'mostrarCamas[]' para llenarlo otra vez con las camas que concidan sus ID's
+        this.mostrarCamas = [];
+        
+        for(let i = 0; i < this.listadoCamasMatrimoniales.length; i++){
+          if( this.listadoCamasMatrimoniales[i].id == this.camaSeleccionada[0].id ){
+            this.mostrarCamas.push(this.listadoCamasMatrimoniales[i]);
+          }
+        }
+
+      });
+
+
+
+    }).catch((error) => {
+
+      console.log(error.code);
+      console.log(error.message);
+
+      this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+
+      this.id_cama_doc = '';
+
+    });
+  }
+
+  seleccionarCliente(clientes: ListadoCliente){
+    let id: string = this.id_cama_doc;
+    let cliente: ListadoCliente = clientes;
+    
+    // actualizar cama en firebase
+    this.db.actualizarInfoCama(id, cliente, 'camas_matrimoniales').then((doc) => {
+
+      
+      this.messageService.add({severity:'success', summary: 'Datos OK', detail: 'Información de la cama actualizada en la base de datos.'});
+
+      this.camaSeleccionada[0] = {
+        id : this.camaSeleccionada[0].id,
+        estado: 'OCUPADA',
+        cliente: cliente.cliente,
+        fIngreso: cliente.fIngreso,
+        fPartida: cliente.fPartida
+      };
+
+
+
+      this.db.obtenerCamas('matrimoniales').subscribe((camas) =>{
+
+        this.listadoCamasMatrimoniales = [];
+      
+        camas.forEach((doc) => {        
+
+          let data : any = {
+            id_doc: doc.id,
+            info: doc.data()
+          }
+          
+          this.listadoCamasMatrimoniales.push({
+            id_doc: doc.id,
+            id: data.info.id,
+            estado: data.info.estado,
+            cliente: data.info.cliente,
+            fIngreso: data.info.fIngreso,
+            fPartida: data.info.fPartida
+          });          
+
+        });
+
+        
+        // Como recuperamos todas las camas de la db de nuevo
+        // vaciamos 'mostrarCamas[]' para llenarlo otra vez con las camas que concidan sus ID's
+        this.mostrarCamas = [];
+        
+        for(let i = 0; i < this.listadoCamasMatrimoniales.length; i++){
+          if( this.listadoCamasMatrimoniales[i].id == this.camaSeleccionada[0].id ){
+            this.mostrarCamas.push(this.listadoCamasMatrimoniales[i]);
+          }
+        }
+
+        console.log(this.listadoCamasMatrimoniales);
+        console.log(this.mostrarCamas)
+
+      });
+      
+
+    }).catch((error) => {
+      console.log(error.code);
+      console.log(error.message);
+
+      this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+    });
+
+    this.display2 = false;
+    // this.id_cama_doc = '';
   }
 
 
