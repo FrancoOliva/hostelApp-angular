@@ -7,7 +7,7 @@ import { FirebaseService } from '../../servicios/firebase.service';
 export interface ListadoCliente {
   cliente: string,
   nacionalidad: string,
-  fIngreso: string
+  fIngreso: string,
   fPartida: string
 }
 
@@ -68,7 +68,7 @@ export class CompartidasComponent implements OnInit {
 
       })
 
-      console.log('recuperamos habitaciones');
+     // console.log('recuperamos habitaciones');
       
     });
 
@@ -94,7 +94,7 @@ export class CompartidasComponent implements OnInit {
 
       }); 
       
-      console.log('recuperamos camas');
+     //console.log('recuperamos camas');
       
     });
 
@@ -299,7 +299,68 @@ export class CompartidasComponent implements OnInit {
   }
 
   desocupar(){
-    console.log('Liberar cama');
+
+    let date: string = (new Date()).getTime().toString();
+
+    this.db.desocuparCama(this.id_cama_doc, 'camas_compartidas').then(() =>{
+      
+      this.messageService.add({severity:'success', summary: 'Datos OK', detail: 'Cama liberada y actualizada en la base de datos.'});
+
+      this.camaSeleccionada[0] = {
+        id : this.camaSeleccionada[0].id,
+        estado: 'LIBRE',
+        cliente: 'SIN ASIGNAR',
+        fIngreso: date,
+        fPartida: date
+      };
+
+      this.db.obtenerCamas('camas_compartidas').subscribe((camas) =>{
+
+        this.listadoCamasCompartidas = [];
+      
+        camas.forEach((doc) => {        
+
+          let data : any = {
+            id_doc: doc.id,
+            info: doc.data()
+          }
+          
+          this.listadoCamasCompartidas.push({
+            id_doc: doc.id,
+            id: data.info.id,
+            estado: data.info.estado,
+            cliente: data.info.cliente,
+            fIngreso: data.info.fIngreso,
+            fPartida: data.info.fPartida
+          });          
+
+        });
+
+        
+        // Como recuperamos todas las camas de la db de nuevo
+        // vaciamos 'mostrarCamas[]' para llenarlo otra vez con las camas que concidan sus ID's
+        this.mostrarCamas = [];
+        
+        for(let i = 0; i < this.listadoCamasCompartidas.length; i++){
+          if( this.listadoCamasCompartidas[i].id == this.camaSeleccionada[0].id ){
+            this.mostrarCamas.push(this.listadoCamasCompartidas[i]);
+          }
+        }
+
+      });
+
+
+
+    }).catch((error) => {
+
+      console.log(error.code);
+      console.log(error.message);
+
+      this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+
+      this.id_cama_doc = '';
+
+    });
   }
 
   seleccionarCliente(clientes: ListadoCliente){
@@ -307,7 +368,7 @@ export class CompartidasComponent implements OnInit {
     let cliente: ListadoCliente = clientes;
     
     // actualizar cama en firebase
-    this.db.actualizarInfoCama(id, cliente).then((doc) => {
+    this.db.actualizarInfoCama(id, cliente, 'camas_compartidas').then((doc) => {
 
       
       this.messageService.add({severity:'success', summary: 'Datos OK', detail: 'Información de la cama actualizada en la base de datos.'});
@@ -366,7 +427,7 @@ export class CompartidasComponent implements OnInit {
     });
 
     this.display2 = false;
-    this.id_cama_doc = '';
+    // this.id_cama_doc = '';
   }
 
   

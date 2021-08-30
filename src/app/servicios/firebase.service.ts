@@ -164,15 +164,27 @@ export class FirebaseService {
 
   }
 
-  actualizarInfoCama(id: string, cliente: ListadoCliente){
+  actualizarInfoCama(id: string, cliente: ListadoCliente, tipo_camas: string){
 
     // console.log(id, ' => ', cliente);
 
-    return this.cloudFirestore.collection('camas_compartidas').doc(id).update({
+    return this.cloudFirestore.collection(tipo_camas).doc(id).update({
       estado: 'OCUPADA',
       cliente: cliente.cliente,
       fIngreso: cliente.fIngreso,
       fPartida: cliente.fPartida
+    });
+  }
+
+  desocuparCama(id_cama: string, tipo_camas: string){
+
+    let date = (new Date()).getTime();
+
+    return this.cloudFirestore.collection(tipo_camas).doc(id_cama).update({
+      estado: 'LIBRE',
+      cliente: 'SIN ASIGNAR',
+      fIngreso: date,
+      fPartida: date
     });
   }
 
