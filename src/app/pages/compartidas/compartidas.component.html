@@ -6,7 +6,7 @@
         <button pButton pRipple type="button" label="Crear Habitación" class="p-button-success" (click)="showBasicDialog()" class="p-button-success" icon="pi pi-user-edit"></button>
         
         <div class="mt-3" *ngIf="listadoHabitaciones.length == 0">
-            <span> No hay habitaciones creadas. </span>
+            <span> {{mensaje2}} </span>
         </div>
     </div>
 

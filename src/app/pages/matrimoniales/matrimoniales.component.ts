@@ -41,11 +41,13 @@ export class MatrimonialesComponent implements OnInit {
   listadoCamasMatrimoniales: Camas[] = [];
 
   mensaje: string = 'No hay camas creadas.';
+  mensaje2: string = 'No hay habitaciones creadas.';
 
   mostrarCamas: Camas[] = [];
   camaSeleccionada: Camas[] = [];
 
   id_cama_doc: any = '';
+  index_cama!: number;
 
   constructor( private fb: FormBuilder, private db: FirebaseService, private messageService: MessageService ) {
 
@@ -54,6 +56,8 @@ export class MatrimonialesComponent implements OnInit {
    }
 
   ngOnInit(): void {    
+
+    this.mensaje2 = 'Buscando habitaciones...';
 
     this.db.obtenerHabitaciones('matrimoniales').subscribe((querySnapshot) => {
 
@@ -65,7 +69,11 @@ export class MatrimonialesComponent implements OnInit {
         
         this.listadoHabitaciones.push(doc);
 
-      })      
+      });
+      
+      if( this.listadoHabitaciones.length == 0 ){
+        this.mensaje2 = 'No hay habitaciones creadas.';
+      }
       
     });
 
@@ -87,9 +95,10 @@ export class MatrimonialesComponent implements OnInit {
           cliente: data.info.cliente,
           fIngreso: data.info.fIngreso,
           fPartida: data.info.fPartida
-        });        
+        });
 
       });
+
       
     });
 
@@ -249,10 +258,12 @@ export class MatrimonialesComponent implements OnInit {
 
     this.camaSeleccionada = [];
 
-    console.log(this.mostrarCamas[index_cama].id_doc);
-
+    // Capturamos el ID del documento que tiene en firebase
+    // Capturamos el indice para ubicarlo en el arreglo
     this.id_cama_doc = this.mostrarCamas[index_cama].id_doc;
+    this.index_cama = index_cama;
 
+    // Sacamos del arreglo la cama seleccionada y lo mostramos en uno nuevo
     this.camaSeleccionada.push(this.mostrarCamas[index_cama]);    
 
     this.display1 = true;
@@ -418,7 +429,72 @@ export class MatrimonialesComponent implements OnInit {
     });
 
     this.display2 = false;
-    // this.id_cama_doc = '';
+  }
+
+  eCama(){
+
+    let i: number = this.index_cama;
+    let eliminar_doc = this.id_cama_doc;
+
+    console.log('index' , '=>', i);
+    console.log(eliminar_doc);
+    console.log(this.mostrarCamas[i]);
+
+    // Eliminamos cama de mostrarCamas -> se ve en el HTML
+    this.mostrarCamas.splice(i,1);
+
+    // Eliminamos cama de firebase usando su ID
+    this.db.eliminarCama(eliminar_doc, 'camas_matrimoniales').then(()=>{
+
+      this.messageService.add({severity:'success', summary: 'Cama eliminada', detail: 'Se eliminó una cama de la base de datos.'});
+
+      this.db.obtenerCamas('matrimoniales').subscribe((camas) =>{
+
+        this.listadoCamasMatrimoniales = [];
+      
+        camas.forEach((doc) => {        
+
+          let data : any = {
+            id_doc: doc.id,
+            info: doc.data()
+          }
+          
+          this.listadoCamasMatrimoniales.push({
+            id_doc: doc.id,
+            id: data.info.id,
+            estado: data.info.estado,
+            cliente: data.info.cliente,
+            fIngreso: data.info.fIngreso,
+            fPartida: data.info.fPartida
+          });          
+
+        });
+
+        
+        // Como recuperamos todas las camas de la db de nuevo
+        // vaciamos 'mostrarCamas[]' para llenarlo otra vez con las camas que concidan sus ID's
+        this.mostrarCamas = [];
+        
+        for(let i = 0; i < this.listadoCamasMatrimoniales.length; i++){
+          if( this.listadoCamasMatrimoniales[i].id == this.camaSeleccionada[0].id ){
+            this.mostrarCamas.push(this.listadoCamasMatrimoniales[i]);
+          }
+        }
+
+      });
+
+      
+
+    }).catch((error)=>{
+      this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+    });
+
+    this.display1 = false;
+
+  }
+
+  borrarHab(habitacion: Habitacion){
+    console.log(habitacion);
   }
 
 

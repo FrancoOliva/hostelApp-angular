@@ -48,6 +48,7 @@ export class CompartidasComponent implements OnInit {
   listadoCamasCompartidas: Camas[] = [];
 
   mensaje: string = 'No hay camas creadas.';
+  mensaje2: string = 'Buscando habitaciones...';
 
   mostrarCamas: Camas[] = [];
   camaSeleccionada: Camas[] = [];
@@ -68,7 +69,9 @@ export class CompartidasComponent implements OnInit {
 
       })
 
-     // console.log('recuperamos habitaciones');
+     if( this.listadoHabitaciones.length == 0 ){
+      this.mensaje2 = 'No hay habitaciones creadas.';
+     }
       
     });
 

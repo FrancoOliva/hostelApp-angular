@@ -5,7 +5,7 @@
         <button pButton pRipple type="button" label="Crear Habitación" class="p-button-success" (click)="showBasicDialog()" class="p-button-success" icon="pi pi-user-edit"></button>
         
         <div class="mt-3" *ngIf="listadoHabitaciones.length == 0">
-            <span> No hay habitaciones creadas. </span>
+            <span> {{ mensaje2 }} </span>
         </div>
     </div>
 
@@ -21,10 +21,13 @@
                         <ng-template pTemplate="footer">
                             <div class="flex flex-wrap">
                                 <div class="flex align-items-center justify-content-center mr-2">
-                                    <button pButton pRipple type="button" label="Ver Camas" (click)="verCamas(habitacion.id)" class="p-button-success"></button>
+                                    <button pButton pRipple type="button" label="Ver" (click)="verCamas(habitacion.id)" class="p-button-success"></button>
                                 </div>
                                 <div class="flex align-items-center justify-content-center mr-2">
-                                    <button pButton pRipple type="button" label="Crear Camas" (click)="crearCamas(habitacion.id)" class="p-button-success"></button>
+                                    <button pButton pRipple type="button" label="Crear" (click)="crearCamas(habitacion.id)" class="p-button-success"></button>
+                                </div>
+                                <div class="flex align-items-center justify-content-center mr-2">
+                                    <button pButton pRipple type="button" label="Eliminar" (click)="borrarHab(habitacion)" class="p-button-danger"></button>
                                 </div>
                             </div>
                         </ng-template>
@@ -63,7 +66,7 @@
 </div>
 
 
-<!--DIALOG-->
+<!--DIALOG Crear Habitaciones-->
 <p-dialog header="Creando habitación" [(visible)]="display" [style]="{width: '25vw'}" [baseZIndex]="10000">
 
     <form [formGroup]="habitacionForm" (ngSubmit)="crearHabitacion()">
@@ -124,7 +127,8 @@
 
     <div class="mt-2">
         <button pButton pRipple label="Ocupar" class="p-button-success mr-2 mt-1" (click)="ocupar()"></button>
-        <button pButton pRipple label="Desocupar" class="p-button-success mr-2 mt-1" (click)="desocupar()"></button>
+        <button pButton pRipple label="Liberar" class="p-button-success mr-2 mt-1" (click)="desocupar()"></button>
+        <button pButton pRipple label="Borrar" class="p-button-danger mr-2 mt-1" (click)="eCama()"></button>
     </div>
 
 </p-dialog>

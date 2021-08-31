@@ -187,6 +187,12 @@ export class FirebaseService {
       fIngreso: date,
       fPartida: date
     });
+
+  }
+
+  eliminarCama(doc:string, coleccion: string){
+    
+    return this.cloudFirestore.collection(coleccion).doc(doc).delete();
   }
 
   
