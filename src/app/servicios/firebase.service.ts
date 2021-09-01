@@ -195,6 +195,11 @@ export class FirebaseService {
     return this.cloudFirestore.collection(coleccion).doc(doc).delete();
   }
 
+  eliminarHab(doc:string, coleccion: string){
+    
+    return this.cloudFirestore.collection(coleccion).doc(doc).delete();
+  }
+
   
 
 

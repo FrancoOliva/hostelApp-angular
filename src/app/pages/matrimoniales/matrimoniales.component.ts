@@ -190,7 +190,7 @@ export class MatrimonialesComponent implements OnInit {
       } else {
         this.listadoHabitaciones[i].mostrarCamas = false;
       }
-    }  
+    }
 
   }
 
@@ -493,8 +493,57 @@ export class MatrimonialesComponent implements OnInit {
 
   }
 
-  borrarHab(habitacion: Habitacion){
-    console.log(habitacion);
+  borrarHab(habitacion: Habitacion, i: number){
+    
+
+    let id: string = habitacion.id;
+
+    let camas: Camas[] = [];
+    
+
+    for( let i = 0; i < this.listadoCamasMatrimoniales.length; i++){
+
+      if( id == this.listadoCamasMatrimoniales[i].id ){
+        camas.push(this.listadoCamasMatrimoniales[i]);
+      }
+
+    }
+
+    if( camas.length > 0 ){
+      this.messageService.add({severity:'error', summary: 'IMPORTANTE', detail: 'Para eliminar una habitación hay que eliminar primero todas sus camas.'});
+    } else {
+
+      this.db.eliminarHab(habitacion.id, 'habitaciones_matrimoniales').then((result) => {
+
+        this.messageService.add({severity:'success', summary: 'IMPORTANTE', detail: 'Habitación eliminada de la base de datos.'});
+        this.listadoHabitaciones.splice(i,1);
+
+        // Recuperamos habitaciones nuevamente
+        this.db.obtenerHabitaciones('matrimoniales').subscribe((querySnapshot) => {
+
+          // Limpiamos el arreglo para evitar errores
+          // cuando creamos una habitación nueva
+          this.listadoHabitaciones = [];
+          
+          querySnapshot.forEach((doc) => {
+            
+            this.listadoHabitaciones.push(doc);
+    
+          });
+          
+          if( this.listadoHabitaciones.length == 0 ){
+            this.mensaje2 = 'No hay habitaciones creadas.';
+          }
+          
+        });
+
+      }).catch((error) =>{
+        this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+      });
+    }
+
+    
+
   }
 
 
