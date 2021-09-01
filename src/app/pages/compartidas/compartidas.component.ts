@@ -42,7 +42,8 @@ export class CompartidasComponent implements OnInit {
   });
 
   id_cama_doc: any = '';
-  id_hab: string = ''; 
+  id_hab: string = '';
+  index_cama!: number;
 
   listadoHabitaciones: Habitacion[] = [];
   listadoCamasCompartidas: Camas[] = [];
@@ -263,7 +264,7 @@ export class CompartidasComponent implements OnInit {
 
     this.camaSeleccionada = [];
 
-    //console.log(this.mostrarCamas[index_cama].id_doc);
+    this.index_cama = index_cama;
 
     this.id_cama_doc = this.mostrarCamas[index_cama].id_doc;
 
@@ -433,6 +434,116 @@ export class CompartidasComponent implements OnInit {
     // this.id_cama_doc = '';
   }
 
+  eCama(){
+
+    let i: number = this.index_cama;
+    let eliminar_doc = this.id_cama_doc;
+
+    
+
+    // Eliminamos cama de mostrarCamas -> se ve en el HTML
+    this.mostrarCamas.splice(i,1);
+
+    // Eliminamos cama de firebase usando su ID
+    this.db.eliminarCama(eliminar_doc, 'camas_compartidas').then(()=>{
+
+      this.messageService.add({severity:'success', summary: 'Cama eliminada', detail: 'Se eliminó una cama de la base de datos.'});
+
+      this.db.obtenerCamas('compartidas').subscribe((camas) =>{
+
+        this.listadoCamasCompartidas = [];
+      
+        camas.forEach((doc) => {        
+
+          let data : any = {
+            id_doc: doc.id,
+            info: doc.data()
+          }
+          
+          this.listadoCamasCompartidas.push({
+            id_doc: doc.id,
+            id: data.info.id,
+            estado: data.info.estado,
+            cliente: data.info.cliente,
+            fIngreso: data.info.fIngreso,
+            fPartida: data.info.fPartida
+          });          
+
+        });
+
+        
+        // Como recuperamos todas las camas de la db de nuevo
+        // vaciamos 'mostrarCamas[]' para llenarlo otra vez con las camas que concidan sus ID's
+        this.mostrarCamas = [];
+        
+        for(let i = 0; i < this.listadoCamasCompartidas.length; i++){
+          if( this.listadoCamasCompartidas[i].id == this.camaSeleccionada[0].id ){
+            this.mostrarCamas.push(this.listadoCamasCompartidas[i]);
+          }
+        }
+
+      });
+
+      
+
+    }).catch((error)=>{
+      this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+    });
+
+    this.display1 = false;
+
+  }
+
+  borrarHab(habitacion: Habitacion, i: number){
+    
+
+    let id: string = habitacion.id;
+
+    let camas: Camas[] = [];
+    
+
+    for( let i = 0; i < this.listadoCamasCompartidas.length; i++){
+
+      if( id == this.listadoCamasCompartidas[i].id ){
+        camas.push(this.listadoCamasCompartidas[i]);
+      }
+
+    }
+
+    if( camas.length > 0 ){
+      this.messageService.add({severity:'error', summary: 'IMPORTANTE', detail: 'Para eliminar una habitación hay que eliminar primero todas sus camas.'});
+    } else {
+
+      this.db.eliminarHab(habitacion.id, 'habitaciones_compartidas').then((result) => {
+
+        this.messageService.add({severity:'success', summary: 'IMPORTANTE', detail: 'Habitación eliminada de la base de datos.'});
+        this.listadoHabitaciones.splice(i,1);
+
+        // Recuperamos habitaciones nuevamente
+        this.db.obtenerHabitaciones('compartidas').subscribe((querySnapshot) => {
+
+          // Limpiamos el arreglo para evitar errores
+          // cuando creamos una habitación nueva
+          this.listadoHabitaciones = [];
+          
+          querySnapshot.forEach((doc) => {
+            
+            this.listadoHabitaciones.push(doc);
+    
+          });
+          
+          if( this.listadoHabitaciones.length == 0 ){
+            this.mensaje2 = 'No hay habitaciones creadas.';
+          }
+          
+        });
+
+      }).catch((error) =>{
+        this.messageService.add({severity:'error', summary: error.code, detail: error.message});
+      });
+    }
+
   
 
+  }
 }
