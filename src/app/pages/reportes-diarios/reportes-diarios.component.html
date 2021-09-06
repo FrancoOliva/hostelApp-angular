@@ -1,12 +1,11 @@
-
-
+<!-- Clientes -->
+<div class="m-5">
+    <h2>Clientes Registrados</h2>
+    <hr>
+</div>
 <div class="grid m-5" >
 
-    <span *ngIf="mostrarMensaje" class="col">
-        Cargando ...
-    </span>
-
-    <div class="col" *ngIf="clientes.length > 0">
+    <div class="col">
         <p-table [value]="clientes" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
@@ -25,6 +24,64 @@
                 </tr>
             </ng-template>
         </p-table>
-    </div>
-    
+    </div>    
+</div>
+
+<!--Pagos-->
+<div class="m-5">
+    <h2>Pagos Registrados</h2>
+    <hr>
+</div>
+<div class="grid m-5" >
+
+    <div class="col">
+        <p-table [value]="pagos" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Cliente</th>
+                    <th>Ingreso</th>
+                    <th>Partida</th>
+                    <th>Forma de Pago</th>
+                    <th>Importe</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-pago>
+                <tr>
+                    <td>{{ pago.cliente }}</td>
+                    <td>{{ pago.fIngreso | date:'dd/MM/yyyy'}}</td>
+                    <td>{{ pago.fPartida | date:'dd/MM/yyyy'}}</td>
+                    <td>{{ pago.fPago }}</td>
+                    <td>{{ pago.importe }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>    
+</div>
+<!--Gastos-->
+<div class="m-5">
+    <h2>Gastos Registrados</h2>
+    <hr>
+</div>
+<div class="grid m-5" >
+
+    <div class="col">
+        <p-table [value]="gastos" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Fecha del gasto</th>
+                    <th>Motivo</th>
+                    <th>Importe</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-gasto>
+                <tr>
+                    <td>{{ gasto.nombre }}</td>
+                    <td>{{ gasto.fGasto | date:'dd/MM/yyyy'}}</td>
+                    <td>{{ gasto.motivo}}</td>
+                    <td>{{ gasto.importe }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>    
 </div>

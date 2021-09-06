@@ -70,8 +70,8 @@ export class FirebaseService {
     let data: Pagos = {
       nombre    : pagos.value.nombre,
       apellido  : pagos.value.apellido,
-      fIngreso  : pagos.value.fIngreso,
-      fPartida  : pagos.value.fPartida,
+      fIngreso  : (pagos.value.fIngreso).getTime(),
+      fPartida  : (pagos.value.fPartida).getTime(),
       importe   : pagos.value.importe,
       fPago     : pagos.value.fPago
     }
@@ -92,13 +92,17 @@ export class FirebaseService {
     let data: Gastos = {
       nombre: gastos.value.nombre,
       motivo: gastos.value.motivo,
-      fGasto: gastos.value.fGasto,
+      fGasto: (gastos.value.fGasto).getTime(),
       importe: gastos.value.importe      
     }
 
 
     // Guardar pago en CloudFirestore
     return this.cloudFirestore.collection('gastos').add(data);
+  }
+
+  obtenerGastos(){
+    return this.cloudFirestore.collection('gastos').valueChanges();
   }
   
   crearHabitacion(tipo: string, dato:Habitacion){

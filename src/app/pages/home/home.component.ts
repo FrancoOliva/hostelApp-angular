@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -13,7 +14,7 @@ export class HomeComponent implements OnInit {
   items: MenuItem[] = [];
   display : boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
 
@@ -48,13 +49,8 @@ export class HomeComponent implements OnInit {
         ]
       },
       {
-        label: 'Reportes',
-        items: [
-          {
-            label: 'Por día',
-            routerLink: 'reportes-diarios'
-          }
-        ]
+        label: 'Reporte',
+        routerLink: 'reportes-diarios'
       }
   ];
 
@@ -62,6 +58,11 @@ export class HomeComponent implements OnInit {
 
   showDialog() {
     this.display  = true;
+  }
+
+  desconectar(){
+    
+    this.router.navigate(['/login']);
   }
 
 }

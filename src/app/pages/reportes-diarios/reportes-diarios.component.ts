@@ -11,7 +11,9 @@ import { ListadoCliente } from '../compartidas/compartidas.component';
 export class ReportesDiariosComponent implements OnInit {
 
 
-  clientes: ListadoCliente[] = [];
+  clientes: any[] = [];
+  pagos: any[] = [];
+  gastos: any[] = [];
 
   mostrarMensaje: boolean = true;
 
@@ -45,8 +47,69 @@ export class ReportesDiariosComponent implements OnInit {
 
     });
 
-    this.db.obtenerPagos().subscribe( data => {
-      console.log(data);
+    this.db.obtenerPagos().subscribe( (querySnapshot) => {
+
+      this.pagos = [];
+
+      querySnapshot.forEach((doc) => {
+        
+        let data : any = doc;
+
+        this.pagos.push({
+          cliente: data.nombre + ' ' + data.apellido,
+          fIngreso: data.fIngreso,
+          fPartida: data.fPartida,
+          fPago: data.fPago,
+          importe: data.importe
+        });
+
+      });
+
+      console.log(this.pagos);
+
+    });
+
+    this.db.obtenerPagos().subscribe( (querySnapshot) => {
+
+      this.pagos = [];
+
+      querySnapshot.forEach((doc) => {
+        
+        let data : any = doc;
+
+        this.pagos.push({
+          cliente: data.nombre + ' ' + data.apellido,
+          fIngreso: data.fIngreso,
+          fPartida: data.fPartida,
+          fPago: data.fPago,
+          importe: data.importe
+        });
+
+      });
+
+      console.log(this.pagos);
+
+    });
+
+    this.db.obtenerGastos().subscribe( (querySnapshot) => {
+
+      this.gastos = [];
+
+      querySnapshot.forEach((doc) => {
+        
+        let data : any = doc;
+
+        this.gastos.push({
+          nombre: data.nombre,
+          fGasto: data.fGasto,
+          motivo: data.motivo,
+          importe: data.importe
+        });
+
+      });
+
+      console.log(this.pagos);
+
     });
 
     
