@@ -1,7 +1,30 @@
 
-<p class="m-5">
-    Actualmente me encuentro aprendiendo de forma autodidacta <strong>como crear gráficas en Angular.</strong>
-</p>
-<p class="m-5">
-    Mi idea es mostrar cuántos clientes, pagos, gastos se generan en el día.
-</p>
+
+<div class="grid m-5" >
+
+    <span *ngIf="mostrarMensaje" class="col">
+        Cargando ...
+    </span>
+
+    <div class="col" *ngIf="clientes.length > 0">
+        <p-table [value]="clientes" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Cliente</th>
+                    <th>Nacionalidad</th>
+                    <th>Ingreso</th>
+                    <th>Partida</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cliente>
+                <tr>
+                    <td>{{cliente.cliente}}</td>
+                    <td>{{cliente.nacionalidad}}</td>
+                    <td>{{cliente.fIngreso | date:'dd/MM/yyyy'}}</td>
+                    <td>{{cliente.fPartida | date:'dd/MM/yyyy'}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    
+</div>

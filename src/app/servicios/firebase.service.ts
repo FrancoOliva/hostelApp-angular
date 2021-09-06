@@ -81,6 +81,12 @@ export class FirebaseService {
     return this.cloudFirestore.collection('pagos').add(data);
   }
 
+  obtenerPagos(){
+
+    return this.cloudFirestore.collection('pagos').valueChanges();
+    
+  }
+
   guardarGasto(gastos: FormGroup){
 
     let data: Gastos = {
@@ -199,6 +205,8 @@ export class FirebaseService {
     
     return this.cloudFirestore.collection(coleccion).doc(doc).delete();
   }
+
+  
 
   
 
